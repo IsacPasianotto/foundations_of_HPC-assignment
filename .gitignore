@@ -1,2 +1,8 @@
 # local folder used to generate the file "report.pdf"
 report/*
+
+# objects file:
+*.o
+
+# executable files:
+*.x
