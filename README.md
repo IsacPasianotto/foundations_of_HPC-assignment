@@ -1,2 +1,5 @@
-# foundations_of_HPC-assignment
-This repo was made for the "foundations of HPC" exam at the University of Trieste that I took during my studies in Data Science and Scientific Computing
+# WORK IN PROGRESS
+
+The material contained in this repository is incomplete, the exercises are still totally or partially unsolved, any solutions, even partial, may be incorrect.
+
+Please be patient, sooner or later the work will be completed
