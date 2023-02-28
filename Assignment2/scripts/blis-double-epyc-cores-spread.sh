@@ -19,14 +19,15 @@ export LD_LIBRARY_PATH=/u/dssc/ipasia00/myblis/lib:$LD_LIBRARY_PATH
 
 export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
-export OMP_NUM_THREADS=64
+#export OMP_NUM_THREADS=64
+export BLIS_NUM_THREADS=64
 
 echo m,k,n,time,GFLOPS > ./results/blis-double-epyc-cores-spread.csv
 
 
 for size in {2000..20000..1000}
 do
-	for i in {1..2}
+	for i in {1..15}
 	do
 		./gemm_blis.x $size $size $size >> ./results/blis-double-epyc-cores-spread.csv
 	done
