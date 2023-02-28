@@ -26,7 +26,7 @@ echo m,k,n,time,GFLOPS > ./results/oblas-double-epyc-cores-spread.csv
 
 for size in {2000..20000..1000}
 do
-	for i in {1..15}
+	for i in {1..2}
 	do
 		./gemm_oblas.x $size $size $size >> ./results/oblas-double-epyc-cores-spread.csv
 	done
