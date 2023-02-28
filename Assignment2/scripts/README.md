@@ -24,66 +24,66 @@ The following table summarises what I have done so far:
 
 | Library | Precision | Node | Scalability | binding  | Status |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Double    | EPYC | Fixed cores | spread   | partiallydone**not** done |
-| MLK     | Double    | EPYC | Fixed cores | spread   | **NOT** done |
-| Blis    | Double    | EPYC | Fixed cores | spread   | **NOT** done |
+| OpenBlas| Double    | EPYC | Fixed cores | spread   | *done* |
+| MKL     | Double    | EPYC | Fixed cores | spread   | *done* |
+| Blis    | Double    | EPYC | Fixed cores | spread   | *done* |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | EPYC | Fixed size  | spread   | **NOT** done |
-| MLK     | Double    | EPYC | Fixed size  | spread   | **NOT** done |
+| MKL     | Double    | EPYC | Fixed size  | spread   | **NOT** done |
 | Blis    | Double    | EPYC | Fixed size  | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed cores | spread   | **NOT** done |
-| MLK     | Float     | EPYC | Fixed cores | spread   |**NOT** done |
+| MKL     | Float     | EPYC | Fixed cores | spread   |**NOT** done |
 | Blis    | Float     | EPYC | Fixed cores | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed size  | spread   | **NOT** done |
-| MLK     | Float     | EPYC | Fixed size  | spread   | **NOT** done |
+| MKL     | Float     | EPYC | Fixed size  | spread   | **NOT** done |
 | Blis    | Float     | EPYC | Fixed size  | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | EPYC | Fixed cores | close   | **NOT** done |
-| MLK     | Double    | EPYC | Fixed cores | close   | **NOT** done |
+| MKL     | Double    | EPYC | Fixed cores | close   | **NOT** done |
 | Blis    | Double    | EPYC | Fixed cores | close   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | EPYC | Fixed size  | close   | **NOT** done |
-| MLK     | Double    | EPYC | Fixed size  | close   | **NOT** done |
+| MKL     | Double    | EPYC | Fixed size  | close   | **NOT** done |
 | Blis    | Double    | EPYC | Fixed size  | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed cores | close    | **NOT** done |
-| MLK     | Float     | EPYC | Fixed cores | close    |**NOT** done |
+| MKL     | Float     | EPYC | Fixed cores | close    |**NOT** done |
 | Blis    | Float     | EPYC | Fixed cores | close    | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed size  | close    | **NOT** done |
-| MLK     | Float     | EPYC | Fixed size  | close    | **NOT** done |
+| MKL     | Float     | EPYC | Fixed size  | close    | **NOT** done |
 | Blis    | Float     | EPYC | Fixed size  | close    | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | THIN | Fixed cores | spread   | **NOT** done |
-| MLK     | Double    | THIN | Fixed cores | spread   | **NOT** done |
+| MKL     | Double    | THIN | Fixed cores | spread   | **NOT** done |
 | Blis    | Double    | THIN | Fixed cores | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | THIN | Fixed size  | spread   | **NOT** done |
-| MLK     | Double    | THIN | Fixed size  | spread   | **NOT** done |
+| MKL     | Double    | THIN | Fixed size  | spread   | **NOT** done |
 | Blis    | Double    | THIN | Fixed size  | spread   |**NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | THIN | Fixed cores | spread   | **NOT** done |
-| MLK     | Float     | THIN | Fixed cores | spread   |**NOT** done |
+| MKL     | Float     | THIN | Fixed cores | spread   |**NOT** done |
 | Blis    | Float     | THIN | Fixed cores | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | THIN | Fixed size  | spread   | **NOT** done |
-| MLK     | Float     | THIN | Fixed size  | spread   | **NOT** done |
+| MKL     | Float     | THIN | Fixed size  | spread   | **NOT** done |
 | Blis    | Float     | THIN | Fixed size  | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | THIN | Fixed cores | close   | **NOT** done |
-| MLK     | Double    | THIN | Fixed cores | close   | **NOT** done |
+| MKL     | Double    | THIN | Fixed cores | close   | **NOT** done |
 | Blis    | Double    | THIN | Fixed cores | close   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | THIN | Fixed size  | close   | **NOT** done |
-| MLK     | Double    | THIN | Fixed size  | close   | **NOT** done |
+| MKL     | Double    | THIN | Fixed size  | close   | **NOT** done |
 | Blis    | Double    | THIN | Fixed size  | close   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | THIN | Fixed cores | close    | **NOT** done |
-| MLK     | Float     | THIN | Fixed cores | close    | **NOT** done |
+| MKL     | Float     | THIN | Fixed cores | close    | **NOT** done |
 | Blis    | Float     | THIN | Fixed cores | close    | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | THIN | Fixed size  | close    | **NOT** done |
-| MLK     | Float     | THIN | Fixed size  | close    | **NOT** done |
+| MKL     | Float     | THIN | Fixed size  | close    | **NOT** done |
 | Blis    | Float     | THIN | Fixed size  | close    | **NOT** done |
