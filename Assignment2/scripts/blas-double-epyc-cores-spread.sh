@@ -20,4 +20,9 @@ export OMP_PLACES=core
 export OMP_PROC_BIND=spread
 export OMP_NUM_THREADS=64
 
-./gemm_oblas.x
+
+for i in {1..15}
+do
+	echo $i
+	./gemm_oblas.x
+done
