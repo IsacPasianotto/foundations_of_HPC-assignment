@@ -126,8 +126,8 @@ int main(int argc, char** argv)
     double gflops = 2.0 * m *n*k;
     gflops = gflops/elapsed*1.0e-9; 
     // printf ("\n Elapsed time %d.%d s\n\n\n", diff(begin,end).tv_sec, diff(begin,end).tv_nsec );
-    printf("%dx%dx%d\t%lf s\t%lf GFLOPS\n", m, n, k, elapsed, gflops);
-
+    //printf("%dx%dx%d\t%lf s\t%lf GFLOPS\n", m, n, k, elapsed, gflops);
+    printf("%d,%d,%d,%lf,%lf\n", m, n, k, elapsed, gflops);
 // FOllowing code is commented out because it is not needed for the benchmark
 /*
 #ifdef PRINT
