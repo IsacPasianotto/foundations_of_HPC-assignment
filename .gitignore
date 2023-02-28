@@ -6,3 +6,8 @@ report/*
 
 # executable files:
 *.x
+
+
+
+# slurm otuput: 
+slurm-*
