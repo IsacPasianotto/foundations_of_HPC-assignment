@@ -24,7 +24,7 @@ export OMP_PROC_BIND=spread
 
 echo cores,m,k,n,time,GFLOPS > ./results/mkl-double-epyc-size-spread.csv
 
-m=12000
+size=12000
 
 for i in {1..64}
 do
