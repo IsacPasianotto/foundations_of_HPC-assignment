@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=64
 #SBATCH --exclusive
 #SBATCH --time=01:00:00
-
+#SBATCH --nodelist=epyc[005]
 cd ..
 
 module load architecture/AMD
@@ -29,6 +29,6 @@ for size in {2000..20000..1000}
 do
 	for i in {1..15}
 	do
-		./gemm_blis.x $size $size $size >> ./results/blis-double-epyc-cores-spread.csv
+		numactl --interleave=0-7 ./gemm_blis.x $size $size $size >> ./results/blis-double-epyc-cores-spread.csv
 	done
 done
