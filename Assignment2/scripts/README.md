@@ -19,7 +19,7 @@ Next steps are:
     - 
 for both: **DOUBLE** and **FLOAT** precision, and for both **EPYC** and **THIN** nodes.
 
-***CURRENT EXECUTABLE STATUS***: `DOUBLE`+`AMD`
+***CURRENT EXECUTABLE STATUS***: `FLOAT`+`AMD`
 
 
 The following table summarises what I have done so far:
@@ -38,29 +38,25 @@ The following table summarises what I have done so far:
 | MKL     | Float     | EPYC | Fixed cores | spread   | *done* |
 | Blis    | Float     | EPYC | Fixed cores | spread   | *done *|
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
--- > fare lo script
-| OpenBlas| Float     | EPYC | Fixed size  | spread   | **NOT** done |
-| MKL     | Float     | EPYC | Fixed size  | spread   | **NOT** done |
-| Blis    | Float     | EPYC | Fixed size  | spread   | **NOT** done |
+| OpenBlas| Float     | EPYC | Fixed size  | spread   | **NOT** done / script ready |
+| MKL     | Float     | EPYC | Fixed size  | spread   | **NOT** done / script ready |
+| Blis    | Float     | EPYC | Fixed size  | spread   | **NOT** done / script ready |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | EPYC | Fixed cores | close   | *done* |
 | MKL     | Double    | EPYC | Fixed cores | close   | *done* |
 | Blis    | Double    | EPYC | Fixed cores | close   | *done* |
--- > check that data...
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | EPYC | Fixed size  | close   | *done* |
 | MKL     | Double    | EPYC | Fixed size  | close   | *done* |
 | Blis    | Double    | EPYC | Fixed size  | close   | *done* |
--- > fare lo script
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | EPYC | Fixed cores | close    | **NOT** done |
-| MKL     | Float     | EPYC | Fixed cores | close    | **NOT** done |
-| Blis    | Float     | EPYC | Fixed cores | close    | **NOT** done |
--- > fare lo script
+| OpenBlas| Float     | EPYC | Fixed cores | close    | *done* |
+| MKL     | Float     | EPYC | Fixed cores | close    | *done* |
+| Blis    | Float     | EPYC | Fixed cores | close    | *done* |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | EPYC | Fixed size  | close    | **NOT** done |
-| MKL     | Float     | EPYC | Fixed size  | close    | **NOT** done |
-| Blis    | Float     | EPYC | Fixed size  | close    | **NOT** done |
+| OpenBlas| Float     | EPYC | Fixed size  | close    | **NOT** done / running ... |
+| MKL     | Float     | EPYC | Fixed size  | close    | **NOT** done / running ... |
+| Blis    | Float     | EPYC | Fixed size  | close    | **NOT** done / runninr ... |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | THIN | Fixed cores | spread   | **NOT** done |
 | MKL     | Double    | THIN | Fixed cores | spread   | **NOT** done |
