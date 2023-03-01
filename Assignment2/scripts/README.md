@@ -46,11 +46,11 @@ The following table summarises what I have done so far:
 | OpenBlas| Double    | EPYC | Fixed cores | close   | *done* |
 | MKL     | Double    | EPYC | Fixed cores | close   | *done* |
 | Blis    | Double    | EPYC | Fixed cores | close   | *done* |
--- > Running
+-- > check that data...
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Double    | EPYC | Fixed size  | close   | **NOT** done |
-| MKL     | Double    | EPYC | Fixed size  | close   | **NOT** done |
-| Blis    | Double    | EPYC | Fixed size  | close   | **NOT** done |
+| OpenBlas| Double    | EPYC | Fixed size  | close   | *done* |
+| MKL     | Double    | EPYC | Fixed size  | close   | *done* |
+| Blis    | Double    | EPYC | Fixed size  | close   | *done* |
 -- > fare lo script
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed cores | close    | **NOT** done |
