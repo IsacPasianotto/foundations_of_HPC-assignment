@@ -32,6 +32,6 @@ do
 	for j in {1..10}
 	do
 		echo -n $i, >> ./results/blis-double-epyc-size-spread.csv
-		./gemm_oblas.x $size $size $size >> ./results/blis-double-epyc-size-spread.csv
+		./gemm_blis.x $size $size $size >> ./results/blis-double-epyc-size-spread.csv
 	done
 done

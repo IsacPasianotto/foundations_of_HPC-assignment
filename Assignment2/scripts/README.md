@@ -38,6 +38,7 @@ The following table summarises what I have done so far:
 | MKL     | Float     | EPYC | Fixed cores | spread   | *done* |
 | Blis    | Float     | EPYC | Fixed cores | spread   | *done *|
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
+-- > fare lo script
 | OpenBlas| Float     | EPYC | Fixed size  | spread   | **NOT** done |
 | MKL     | Float     | EPYC | Fixed size  | spread   | **NOT** done |
 | Blis    | Float     | EPYC | Fixed size  | spread   | **NOT** done |
@@ -45,14 +46,17 @@ The following table summarises what I have done so far:
 | OpenBlas| Double    | EPYC | Fixed cores | close   | *done* |
 | MKL     | Double    | EPYC | Fixed cores | close   | *done* |
 | Blis    | Double    | EPYC | Fixed cores | close   | *done* |
+-- > Running
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Double    | EPYC | Fixed size  | close   | **NOT** done |
 | MKL     | Double    | EPYC | Fixed size  | close   | **NOT** done |
-| Blis    | Double    | EPYC | Fixed size  | **NOT** done |
+| Blis    | Double    | EPYC | Fixed size  | close   | **NOT** done |
+-- > fare lo script
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed cores | close    | **NOT** done |
-| MKL     | Float     | EPYC | Fixed cores | close    |**NOT** done |
+| MKL     | Float     | EPYC | Fixed cores | close    | **NOT** done |
 | Blis    | Float     | EPYC | Fixed cores | close    | **NOT** done |
+-- > fare lo script
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed size  | close    | **NOT** done |
 | MKL     | Float     | EPYC | Fixed size  | close    | **NOT** done |
