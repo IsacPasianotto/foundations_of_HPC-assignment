@@ -11,3 +11,13 @@ report/*
 
 # slurm otuput: 
 slurm-*
+
+
+# File used to obtains plot
+.Rproj.user
+*.Rproj
+*.R
+.vscode/
+*.RData
+*.Rhistory
+
