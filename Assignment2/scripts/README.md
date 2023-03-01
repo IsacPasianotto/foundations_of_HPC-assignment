@@ -19,6 +19,8 @@ Next steps are:
     - 
 for both: **DOUBLE** and **FLOAT** precision, and for both **EPYC** and **THIN** nodes.
 
+***CURRENT EXECUTABLE STATUS***: `FLOAT`+`AMD`
+
 
 The following table summarises what I have done so far:
 
@@ -32,9 +34,9 @@ The following table summarises what I have done so far:
 | MKL     | Double    | EPYC | Fixed size  | spread   | **NOT** done |
 | Blis    | Double    | EPYC | Fixed size  | spread   | **NOT** done |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | EPYC | Fixed cores | spread   | **NOT** done |
-| MKL     | Float     | EPYC | Fixed cores | spread   |**NOT** done |
-| Blis    | Float     | EPYC | Fixed cores | spread   | **NOT** done |
+| OpenBlas| Float     | EPYC | Fixed cores | spread   | *done*|
+| MKL     | Float     | EPYC | Fixed cores | spread   |*done* |
+| Blis    | Float     | EPYC | Fixed cores | spread   | *done*|
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | EPYC | Fixed size  | spread   | **NOT** done |
 | MKL     | Float     | EPYC | Fixed size  | spread   | **NOT** done |
