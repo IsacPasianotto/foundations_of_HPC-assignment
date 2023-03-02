@@ -11,7 +11,7 @@
 cd ..
 
 # clean any executable files left over from previous runs 
-# The makefiles will produce executables with the same name, then 
+# The two makefiles will produce executables with the same name, then 
 # it doesn't matter which make file's clean is called, it will works anyway
 make -f Makefile_DOUBLE clean 
 
@@ -21,4 +21,4 @@ module load openBLAS/0.3.21-omp
 
 export LD_LIBRARY_PATH=/u/dssc/ipasia00/myblisintel/lib:$LD_LIBRARY_PATH
 
-make -f Makefile_DOUBLE_intel cpu
+make -f Makefile_FLOAT_intel cpu
