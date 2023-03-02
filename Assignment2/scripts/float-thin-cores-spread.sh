@@ -21,18 +21,18 @@ export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
 
 
-echo m,k,n,time,GFLOPS > ./results/blis-double-epyc-cores-spread.csv
-echo m,k,n,time,GFLOPS > ./results/mkl-double-epyc-cores-spread.csv
-echo m,k,n,time,GFLOPS > ./results/oblas-double-epyc-cores-spread.csv
+echo m,k,n,time,GFLOPS > ./results/blis-float-intel-cores-spread.csv
+echo m,k,n,time,GFLOPS > ./results/mkl-float-intel-cores-spread.csv
+echo m,k,n,time,GFLOPS > ./results/oblas-float-intel-cores-spread.csv
 
 for size in {2000..20000..1000}
 do
 	for i in {1..10}
 	do
         export OMP_NUM_THREADS=12
-        ./gemm_oblas.x $size $size $size >> ./results/oblas-double-epyc-cores-spread.csv
-        ./gemm_mkl.x $size $size $size >> ./results/mkl-double-epyc-cores-spread.csv
+        ./gemm_oblas.x $size $size $size >> ./results/oblas-float-intel-cores-spread.csv
+        ./gemm_mkl.x $size $size $size >> ./results/mkl-float-intel-cores-spread.csv
         export BLIS_NUM_THREADS=12
-		./gemm_blis.x $size $size $size >> ./results/blis-double-epyc-cores-spread.csv
+		./gemm_blis.x $size $size $size >> ./results/blis-float-intel-cores-spread.csv
 	done
 done

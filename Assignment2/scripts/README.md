@@ -59,13 +59,13 @@ The following table summarises what I have done so far:
 | Blis    | Float     | EPYC | Fixed size  | close    | *done* |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 
-| OpenBlas| Double    | THIN | Fixed cores | spread   | **NOT** done |
-| MKL     | Double    | THIN | Fixed cores | spread   | **NOT** done |
-| Blis    | Double    | THIN | Fixed cores | spread   | **NOT** done |
+| OpenBlas| Double    | THIN | Fixed cores | spread   | **NOT** done / queued |
+| MKL     | Double    | THIN | Fixed cores | spread   | **NOT** done / queued |
+| Blis    | Double    | THIN | Fixed cores | spread   | **NOT** done / queued |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Double    | THIN | Fixed size  | spread   | **NOT** done |
-| MKL     | Double    | THIN | Fixed size  | spread   | **NOT** done |
-| Blis    | Double    | THIN | Fixed size  | spread   |**NOT** done |
+| OpenBlas| Double    | THIN | Fixed size  | spread   | **NOT** done / Running ... |
+| MKL     | Double    | THIN | Fixed size  | spread   | **NOT** done / Running ... |
+| Blis    | Double    | THIN | Fixed size  | spread   | **NOT** done / Running ... |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
 | OpenBlas| Float     | THIN | Fixed cores | spread   | **NOT** done |
 | MKL     | Float     | THIN | Fixed cores | spread   |**NOT** done |

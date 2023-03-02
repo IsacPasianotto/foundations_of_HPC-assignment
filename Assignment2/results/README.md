@@ -16,7 +16,7 @@ Where:
     - `float`
 - `architecture` indicates the CPU type of the node where the benchmarks are runned: 
     - `epyc` if it's performed in a epyc nodes (AMD CPUs)
-    - `thin` if it's performed in a thin node  (INTEL CPUs)
+    - `intel` if it's performed in a thin node  (INTEL CPUs)
 - `fixed`: how we measure the scalability of the `gemm.c` code. It can be: 
     - `cores`: it means that the number of cores is fixed (64 for epyc, 12 for thin nodes). In this case the size of the square matrices is increased form 2k to 20k in steps of 1000
     - `size`: it means that the size of the three matrices is fixed at 12k. The scalability is measured encreasing the number of cores used to run the code (from 1 to 64/12 in epyc/thin nodes)
