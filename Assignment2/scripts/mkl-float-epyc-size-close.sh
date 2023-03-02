@@ -22,7 +22,7 @@ export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
 
 
-fileout=./results/mkl-mkl-epyc-size-close.csv
+fileout=./results/mkl-float-epyc-size-close.csv
 
 echo cores,m,k,n,time,GFLOPS > $fileout
 

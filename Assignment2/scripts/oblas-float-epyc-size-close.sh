@@ -22,7 +22,7 @@ export OMP_PLACES=cores
 export OMP_PROC_BIND=spread
 
 
-fileout=./results/oblas-float-size-close.csv
+fileout=./results/oblas-float-epyc-size-close.csv
 
 echo cores,m,k,n,time,GFLOPS > $fileout
 
