@@ -67,26 +67,26 @@ The following table summarises what I have done so far:
 | MKL     | Double    | THIN | Fixed size  | spread   | **NOT** done / Running ... |
 | Blis    | Double    | THIN | Fixed size  | spread   | **NOT** done / Running ... |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | THIN | Fixed cores | spread   | **NOT** done |
-| MKL     | Float     | THIN | Fixed cores | spread   |**NOT** done |
-| Blis    | Float     | THIN | Fixed cores | spread   | **NOT** done |
+| OpenBlas| Float     | THIN | Fixed cores | spread   | **NOT** done / script ready |
+| MKL     | Float     | THIN | Fixed cores | spread   | **NOT** done / script ready |
+| Blis    | Float     | THIN | Fixed cores | spread   | **NOT** done / script ready |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | THIN | Fixed size  | spread   | **NOT** done |
-| MKL     | Float     | THIN | Fixed size  | spread   | **NOT** done |
-| Blis    | Float     | THIN | Fixed size  | spread   | **NOT** done |
+| OpenBlas| Float     | THIN | Fixed size  | spread   | **NOT** done / script ready |
+| MKL     | Float     | THIN | Fixed size  | spread   | **NOT** done / script ready |
+| Blis    | Float     | THIN | Fixed size  | spread   | **NOT** done / script ready |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Double    | THIN | Fixed cores | close   | **NOT** done |
-| MKL     | Double    | THIN | Fixed cores | close   | **NOT** done |
-| Blis    | Double    | THIN | Fixed cores | close   | **NOT** done |
+| OpenBlas| Double    | THIN | Fixed cores | close   | **NOT** done / script ready |
+| MKL     | Double    | THIN | Fixed cores | close   | **NOT** done / script ready |
+| Blis    | Double    | THIN | Fixed cores | close   | **NOT** done / script ready |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Double    | THIN | Fixed size  | close   | **NOT** done |
-| MKL     | Double    | THIN | Fixed size  | close   | **NOT** done |
-| Blis    | Double    | THIN | Fixed size  | close   | **NOT** done |
+| OpenBlas| Double    | THIN | Fixed size  | close   | **NOT** done / script ready |
+| MKL     | Double    | THIN | Fixed size  | close   | **NOT** done / script ready |
+| Blis    | Double    | THIN | Fixed size  | close   | **NOT** done / script ready |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | THIN | Fixed cores | close    | **NOT** done |
-| MKL     | Float     | THIN | Fixed cores | close    | **NOT** done |
-| Blis    | Float     | THIN | Fixed cores | close    | **NOT** done |
+| OpenBlas| Float     | THIN | Fixed cores | close    | **NOT** done / script ready |
+| MKL     | Float     | THIN | Fixed cores | close    | **NOT** done / script ready |
+| Blis    | Float     | THIN | Fixed cores | close    | **NOT** done / script ready |
 |:-------:|:---------:|:----:|:-----------:|:------:|:------:|
-| OpenBlas| Float     | THIN | Fixed size  | close    | **NOT** done |
-| MKL     | Float     | THIN | Fixed size  | close    | **NOT** done |
-| Blis    | Float     | THIN | Fixed size  | close    | **NOT** done |
+| OpenBlas| Float     | THIN | Fixed size  | close    | **NOT** done / script ready |
+| MKL     | Float     | THIN | Fixed size  | close    | **NOT** done / script ready |
+| Blis    | Float     | THIN | Fixed size  | close    | **NOT** done / script ready |
