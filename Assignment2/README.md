@@ -13,8 +13,8 @@ In this folder there are all the file needed to do the exercise second exercise 
     - `Makefile_DOUBLE_intel`: for `DOUBLE` precision, on **THIN** nodes
     - `Makefile_FLOAT_intel`: for `FLOAT` precision, on **THIN** nodes
 
-- `dgemm.c`: the code given by the professor in the assignment. 
-- `mygemm.c`: the code that I used to do the exercise. It is a copy of the code given by the professor, with some modifications in the printing format of the results (to make it easier work with the results).
+- `dgemm.c`: the code [given by the professor](dgemm.c) in the assignment. 
+- `mygemm.c`: the [code that I used](mygemm.c) to do the exercise. It is a copy of the code given by the professor, with some modifications in the printing format of the results (to make it easier work with the results).
 
 ## - `Scripts` [directory](scripts)
 
@@ -22,6 +22,7 @@ In this folder there are all the file needed to do the exercise second exercise 
 - `<--->.sh`: scripts to perform the code. The name of the scripts inside should be self explanatory. In particular there are scripts to:
     - compile the code (with the different makefiles)
     - run the code
+    
 All that `.sh` file are scripts executed by the `sbatch` command.
 
 ## - `Results` [directory](results)
