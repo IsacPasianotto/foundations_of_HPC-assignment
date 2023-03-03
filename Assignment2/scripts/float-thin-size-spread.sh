@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=12
 #SBATCH --exclusive
 #SBATCH --time=02:00:00
-
+#SBATCH --nodelist=thin[010]
 cd ..
 
 module load architecture/Intel
