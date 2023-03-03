@@ -1,5 +1,3 @@
-***CURRENT EXECUTABLE***: `FLOAT`+`AMD`
-
 # logbook
 
 The scripts in this folder are aimed to: 
