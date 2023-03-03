@@ -45,18 +45,29 @@ size=12000
 # The previous lines of  code were executed, but
 # the execution was not complete because the time was up before completing the procedure
 
-for i in {8..12}
+# for i in {8..12}
+# do
+#	for j in {1..10}
+#	do
+#        export OMP_NUM_THREADS=$i
+#		echo -n $i, >> ./results/oblas-double-intel-size-spread.csv
+#		./gemm_oblas.x $size $size $size >> ./results/oblas-double-intel-size-spread.csv
+#        echo -n $i, >> ./results/mkl-double-intel-size-spread.csv
+#        ./gemm_mkl.x $size $size $size >> ./results/mkl-double-intel-size-spread.csv
+#        export BLIS_NUM_THREADS=$i
+#        echo -n $i, >> ./results/blis-double-intel-size-spread.csv
+#        ./gemm_blis.x $size $size $size >> ./results/blis-double-intel-size-spread.csv
+#	done
+# done
+
+# Some data with mkl libraries were wrong... just re-run that test
+echo cores,m,k,n,time,GFLOPS > ./results/mkl-double-intel-size-spread.csv
+for i in {1..12}
 do
 	for j in {1..10}
 	do
-        export OMP_NUM_THREADS=$i
-		echo -n $i, >> ./results/oblas-double-intel-size-spread.csv
-		./gemm_oblas.x $size $size $size >> ./results/oblas-double-intel-size-spread.csv
-        echo -n $i, >> ./results/mkl-double-intel-size-spread.csv
-        ./gemm_mkl.x $size $size $size >> ./results/mkl-double-intel-size-spread.csv
-        export BLIS_NUM_THREADS=$i
-        echo -n $i, >> ./results/blis-double-intel-size-spread.csv
-        ./gemm_blis.x $size $size $size >> ./results/blis-double-intel-size-spread.csv
+		export OMP_NUM_THREADS=$i
+		echo -n $i, >> ./results/mkl-double-intel-size-spread.csv
+		./gemm_mkl.x $size $size $size >> ./results/mkl-double-intel-size-spread.csv
 	done
 done
-
