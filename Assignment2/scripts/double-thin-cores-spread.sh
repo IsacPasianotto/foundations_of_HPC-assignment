@@ -42,14 +42,28 @@ export OMP_PROC_BIND=spread
 # the execution was not complete because the time was up before completing the procedure.
 
 
-for size in {13000..20000..1000}
+# for size in {13000..20000..1000}
+# do
+# 	for i in {1..10}
+#	do
+#        export OMP_NUM_THREADS=12
+#        ./gemm_oblas.x $size $size $size >> ./results/oblas-double-intel-cores-spread.csv
+#        ./gemm_mkl.x $size $size $size >> ./results/mkl-double-intel-cores-spread.csv
+#        export BLIS_NUM_THREADS=12
+#	./gemm_blis.x $size $size $size >> ./results/blis-double-intel-cores-spread.csv
+#	done
+# done
+
+#  For some reason, the data about mkl where not consistent with the others, I runned it again to check if 
+#  there are some issues or was an accidental case (the problems are only in [10000-12000] values)
+
+echo m,k,n,time,GFLOPS > ./results/mkl-double-intel-cores-spread.csv
+export OMP_NUM_THREADS=12
+
+for size in {2000..20000..1000}
 do
 	for i in {1..10}
 	do
-        export OMP_NUM_THREADS=12
-        ./gemm_oblas.x $size $size $size >> ./results/oblas-double-intel-cores-spread.csv
-        ./gemm_mkl.x $size $size $size >> ./results/mkl-double-intel-cores-spread.csv
-        export BLIS_NUM_THREADS=12
-	./gemm_blis.x $size $size $size >> ./results/blis-double-intel-cores-spread.csv
+		./gemm_mkl.x $size $size $size >> ./results/mkl-double-intel-cores-spread.csv
 	done
 done
