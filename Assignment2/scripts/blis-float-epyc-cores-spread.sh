@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=64
 #SBATCH --exclusive
 #SBATCH --time=01:00:00
-#SBATCH --nodelist=epyc[005]
+#SBATCH --nodelist=epyc[006]
 cd ..
 
 module load architecture/AMD
