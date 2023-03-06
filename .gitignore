@@ -23,3 +23,7 @@ slurm-*
 
 # Folder with all files for the report
 report/
+
+
+# Data for a plot that is used only in the report
+Assignment2/results/NONUMACTL.csv
