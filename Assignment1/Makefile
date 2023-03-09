@@ -9,7 +9,7 @@ CFLAGS=-I$(INCDIR) -Wall -c -fopenmp
 
 # Object files
 OBJDIR=obj
-OBJECTS=$(OBJDIR)/main.o $(OBJDIR)/initialize.o $(OBJDIR)/read_write.o
+OBJECTS=$(OBJDIR)/main.o $(OBJDIR)/initialize.o $(OBJDIR)/run.o $(OBJDIR)/read_write_pgn.o
 OBJFLAGS= -Wall -fopenmp
 
 main.x: $(OBJECTS)

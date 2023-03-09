@@ -9,18 +9,8 @@
 
 // my header files 
 #include "initialize.h"
-
-/*
-
-        HOW TO DEAL WITH COMMAND LINE ARGUMENTS?
-
-        SEE THE PROF EXAMPLE: 
-
-        https://github.com/Foundations-of-HPC/Foundations_of_HPC_2022/blob/main/Assignment/exercise1/get_args.c
-
-
-*/
-
+#include "read_write_pgn.h"
+#include "run.h"
 
 /*
 
@@ -49,10 +39,6 @@ int e = ORDERED;
 int n = 10000;
 int s = -1;
 char *fname = NULL;
-
-
-
-
 
 /*
 
@@ -136,9 +122,8 @@ int main(int argc, char *argv[])
             return 1;
         }
         printf("Running the game of life ...\n");
-        // run();
+        run(fname, k, e, n, s);
     }
-
 
 
     free(fname);

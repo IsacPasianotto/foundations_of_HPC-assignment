@@ -6,16 +6,14 @@
 #include<mpi.h>
 
 #include"initialize.h"
-#include"read_write.h"
-
-
+#include"read_write_pgn.h"
 char* world; 
 
 /*
     initialize_serial(): fill an array of char with random values
         and call the write_pgm() function to write it into the 
         desidered file. The probability than a cell starts as alive
-         (value = 255) is the 25%
+         (value = 255) is the 33%
     @param:
     fname:  name of the file where to write the results
     k:     The size of the square-matrix the playground should be 
@@ -31,16 +29,17 @@ void initialize_serial(char* fname, int k)
         srand(seed);
 
         #pragma omp for
-            for (int i = 1; i < k*k; i++)
-                world[i] = (rand()%100<25) ? 0 : 255; 
+            for (int i = 0; i < k*k; i++)
+                world[i] = (rand()%100<33) ? 255 : 0; 
     }
-    write_pgm_serial(fname, k, world); 
+    write_pgm_image(world, 255, k, k, fname); 
 }
 
 /*
     initialize_parallel(): fill an array of char with random values
         and call the write_pgm() function to write it into the 
-        desidered file
+        desidered file.  The probability than a cell starts as alive
+        (value = 255) is the 33%
     
     @param:
     fname:  name of the file where to write the results
@@ -57,17 +56,28 @@ void initialize_parallel(char* fname, int k, int rank, int size)
 
     int localRows_lenght; 
     int std_size = k*k/size;
-    localRows_lenght = (rank!=size-1) ? std_size: std_size + k*k%size;
-    char* localWorld = (char*)malloc(localRows_lenght*sizeof(char));
+    localRows_lenght = (rank!=0) ? std_size: std_size + k*k%size;
+    char* localWorld = (char*)malloc(std_size*std_size*sizeof(char));
 
-    MPI_Barrier(MPI_COMM_WORLD);
     #pragma omp parallel
     {
         #pragma omp for schedule(static, 1)
             for (int i = 0; i < localRows_lenght; i++)
-                localWorld[i] = (rand()%100<25) ? 0 : 255;
-    } 
-    write_pgm_parallel(fname, std_size, localRows_lenght, localWorld, rank, size);
+                localWorld[i] = (rand()%100<33) ? 255 : 0;
+    }
+    char* world; 
+    if (rank == 0)
+        world = (char*)malloc(k*k*sizeof(char));
+    MPI_Barrier(MPI_COMM_WORLD);
+    // MPI_Gather(localWorld, localRows_lenght, MPI_CHAR, world, localRows_lenght, MPI_CHAR, 0, MPI_COMM_WORLD);
+
+    MPI_Gather(localWorld, localRows_lenght, MPI_CHAR, world, localRows_lenght, MPI_CHAR, 0, MPI_COMM_WORLD);
+    // char* world = (char*)malloc(k*k*sizeof(char));
+    // char* remaing = (char*)malloc(k*k%size*sizeof(char));
+    // the last process will have to take care of the remaining cells
+    
+    if (rank == 0)
+        write_pgm_image(world, 255, k, k, fname);
 }
 
 /*
