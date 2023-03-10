@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>
 #include<getopt.h>  //for getopt() 
 
 // for parallelism
@@ -29,6 +28,10 @@
 // for the -k option (playground size)
 #define K_DEFAULT 100
 
+// for the -t options (time): 
+#define TIME_DEFAULT 0  
+
+
 // for the -f option (file name of the file that has to be read/written)
 char fname_default[] = "game_of_life.pbm";
 
@@ -39,6 +42,7 @@ int e = ORDERED;
 int n = 10000;
 int s = -1;
 char *fname = NULL;
+int t = TIME_DEFAULT;
 
 /*
 
@@ -51,7 +55,7 @@ char *fname = NULL;
 int main(int argc, char *argv[])
 {
     int action = 0; // I don't know if I need this here, but I'll leave it here for now
-    char* optstring = "irk:e:f:n:s:";
+    char* optstring = "irk:e:f:n:s:t";
 
     int c; 
 
@@ -73,7 +77,7 @@ int main(int argc, char *argv[])
                 e = atoi(optarg);
                 break;
             case 'f':
-                fname = (char*)malloc( sizeof(optarg)+1 );     
+                fname = (char*)malloc( 25*sizeof(char) );     
                 sprintf(fname, "%s", optarg);
                 break;
             case 'n':
@@ -81,6 +85,10 @@ int main(int argc, char *argv[])
                 break;
             case 's':
                 s = atoi(optarg);
+                break;
+            case 't':
+                t = 1; 
+                printf("Time option selected\n");
                 break;
             default :
                 printf("argument -%c not known\n", c );

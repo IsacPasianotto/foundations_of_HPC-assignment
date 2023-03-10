@@ -13,7 +13,7 @@ char* world;
     initialize_serial(): fill an array of char with random values
         and call the write_pgm() function to write it into the 
         desidered file. The probability than a cell starts as alive
-         (value = 255) is the 33%
+         (value = 255) is the 20%
     @param:
     fname:  name of the file where to write the results
     k:     The size of the square-matrix the playground should be 
@@ -30,7 +30,7 @@ void initialize_serial(char* fname, int k)
 
         #pragma omp for
             for (int i = 0; i < k*k; i++)
-                world[i] = (rand()%100<33) ? 255 : 0; 
+                world[i] = (rand()%100<5) ? 255 : 0; 
     }
     write_pgm_image(world, 255, k, k, fname); 
 }
@@ -39,7 +39,7 @@ void initialize_serial(char* fname, int k)
     initialize_parallel(): fill an array of char with random values
         and call the write_pgm() function to write it into the 
         desidered file.  The probability than a cell starts as alive
-        (value = 255) is the 33%
+        (value = 255) is the 20%
     
     @param:
     fname:  name of the file where to write the results
@@ -63,7 +63,7 @@ void initialize_parallel(char* fname, int k, int rank, int size)
     {
         #pragma omp for schedule(static, 1)
             for (int i = 0; i < localRows_lenght; i++)
-                localWorld[i] = (rand()%100<33) ? 255 : 0;
+                localWorld[i] = (rand()%100<5) ? 255 : 0;
     }
     char* world; 
     if (rank == 0)
@@ -100,12 +100,15 @@ void initialize(char* fname, int k)
     if (size > 1)
     {
         initialize_parallel(fname, k, rank, size);
+        printf("finito di inizializzare il mondo\n");
+        MPI_Finalize();
+        return; 
     }
     else
     {
         MPI_Finalize();
         initialize_serial(fname, k);
+        printf("finito di inizializzare il mondo\n");
         return;
     }
-    MPI_Finalize();
 }

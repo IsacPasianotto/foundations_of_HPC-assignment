@@ -9,14 +9,8 @@
 
 
 
-
-
-
-
-
-
-
-
+int mval;
+int* maxVal = &mval;
 
     /*
     
@@ -55,19 +49,19 @@ char count_neighbours_allWorld(char* world, int k, int i)
         // left
         total += (i%k == 0) ? world[i+k-1] : world[i-1];
         // right
-        total += (i%k == k-1) ? world[i-k+1] : world[i+1];
+        total += (i%(k-1) == 0) ? world[i-k+1] : world[i+1];
         // top-left
-        if (i < k)
-            total += (i%k == 0) ? world[k*k-1] : world[k*(k-1) + i-1];
+        if (i < k) // top row
+            total += (i == 0) ? world[k*k-1] : world[k*(k-1) + i-1];
         else
             total += (i%k == 0) ? world[i-1] : world[i-k-1];
         //  top-right
-        if (i < k)
+        if (i < k) // top row
             total += (i==k-1) ? world[k*(k-1)] : world[k*(k-1) + i+1];
         else
-            total += (i%k == k-1) ? world[i-2*k + 1] : world[i-k+1];
+            total += (i%(k-1) == 0) ? world[i+1-2*k] : world[i+1-k];
         // bottom-left
-        if (i >= k*(k-1))
+        if (i >= k*(k-1))  // bottom row
             total += (i==k*(k-1)) ? world[k-1] : world[i-k*(k-1)-1];
         else
             total += (i%k == 0) ? world[i+2*k-1] : world[i+k-1];
@@ -78,27 +72,6 @@ char count_neighbours_allWorld(char* world, int k, int i)
             total += world[i+k+1];
     return total;
 } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -121,12 +94,11 @@ void run_ordered(char* fname, int k, int n, int s)
     
     char* world = (char*)malloc(k*k*sizeof(char));
 //    void* world2 = (void*)malloc(k*k*sizeof(char));
-    int mval=255;
-    int* maxVal = &mval;
 
     // Just because read_pgm_image() needs pointers...
     read_pgm_image((void**)&world  ,maxVal,  &k, &k, fname);
 
+    #pragma omp parallel for schedule(static)
     for (int day = 0; day < n; day++)
     {
         // each cell has 8 neighbours and they are updated progressively 
@@ -152,6 +124,10 @@ void run_ordered(char* fname, int k, int n, int s)
             free(filename);
        }  // end if
     } // end for day
+    char* filename = (char*)malloc(k*k*sizeof(char));
+    sprintf(filename, "game_of_life_end.pbm");
+    write_pgm_image(world, 255, k, k, filename);
+    free(filename);
 } // end run_ordered
 
 /*
@@ -184,18 +160,15 @@ void run_static_serial(char* fname, int k, int n, int s)
     printf("run_static_serial\n");
     char* world = (char*)malloc(k*k*sizeof(char));
     char* should_live = (char*)malloc(k*k*sizeof(char));
-    int mval=255;
-    int* maxVal = &mval; 
     read_pgm_image((void**)&world  , maxVal,  &k, &k, fname);
-    
+
+    #pragma omp parallel for schedule(static)  
     for (int day = 0; day < n; day++)
     {
         for (int i = 0; i < k*k; i++)
         {
             char alive_neighbours = count_neighbours_allWorld(world, k, i);
             should_live[i] = (alive_neighbours == -3 || alive_neighbours == -2) ? 255 : 0;
-            printf("at i = %d, world is: %c\n", i, world[i]);
-            printf("at i = %d, should live is: %c\n" , i, should_live[i]);
         }
         for (int i = 0; i < k*k; i++)
             world[i] = should_live[i];
@@ -208,14 +181,18 @@ void run_static_serial(char* fname, int k, int n, int s)
             write_pgm_image(world, 255, k, k, filename);
             free(filename);
         }  // end if    
-    }    
+    }   
     free(should_live);
+    char* filename = (char*)malloc(k*k*sizeof(char));
+    sprintf(filename, "game_of_life_end.pbm");
+    write_pgm_image(world, 255, k, k, filename);
+    free(filename);
     free(world);
 }
 
 void run_static_parallel(char* fname, int k, int n, int s, int rank, int size)
 {
-    printf("run_static_parallel\n");
+    // same as run_static_serial() 
 }
 
 
