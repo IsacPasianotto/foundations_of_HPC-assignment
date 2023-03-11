@@ -142,11 +142,9 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
     if (rank ==0)
     {
         read_pbm((void**)&world, smaxVal, &k, &k, fname);
-        printf("staring broadcasting\n");
         // need to pass world to all the processes
         MPI_Bcast(world, k*k*sizeof(char), MPI_UNSIGNED_CHAR, 0, MPI_COMM_WORLD);
-        // MPI_Barrier(MPI_COMM_WORLD);
-        printf("broadcasting done\n");
+        MPI_Barrier(MPI_COMM_WORLD);
     }
 
     // Calculate the size each process must handle
@@ -155,34 +153,94 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
     if (local_len*size < k*k && rank < k*k-local_len*size)
         local_len++;
     
-    unsigned char *local_world;
-    local_world = malloc(local_len*sizeof(char));
-
-    // Receive the initial state of the playground
-    // need to compute the displacements and the lengths of the data to be received
-    if (rank ==0)
-    {
-        int *displs = malloc(size*sizeof(int));
-        int *sendcounts = malloc(size*sizeof(int));
-        for (int i = 0; i < size; i++)
+    
+    unsigned int *offset = malloc(size*sizeof(unsigned int));
+    int *lenghts = malloc(size*sizeof(int));
+    
+    for (int j = 0; j < size; j++) //temporary needed in the nex loop
         {
-            // same logic of local_len
-            sendcounts[i] = k*k/size;
-            if (sendcounts[i]*size < k*k && i < k*k-sendcounts[i]*size)
-                sendcounts[i]++;
-            displs[i] = i==0 ? 0 : displs[i-1]+sendcounts[i-1];
+            lenghts[j] = k*k/size;
+            if (lenghts[j]*size < k*k && j < k*k-lenghts[j]*size)
+                lenghts[j]++;
         }
-        printf("start scatterv\n");
-        MPI_Scatterv(world, sendcounts, displs, MPI_UNSIGNED_CHAR, local_world, local_len, MPI_UNSIGNED_CHAR, 0, MPI_COMM_WORLD);
-        free(displs);
-        free(sendcounts);
+    for (int i = 0; i < size; i++) 
+    {   
+        offset[i] = i*lenghts[i];  
     }
-    printf("Process %d received %d cells", rank, local_len);
 
-    // in order to use MPI_Scatterv, the displacements and the lengths of the data to be received
-    // must be computed
+    unsigned char *local_world_next;
+    unsigned char *world_next;
+    /*
+        Start the actual game of life
+    */
+    for (unsigned int day = 0; day < n; day++)
+    {
+        local_world_next = malloc(local_len*sizeof(char));
+        for (unsigned int i = 0; i < local_len; i++)
+            local_world_next[i] = should_live_parallel(world, k, i, smaxVal, offset, rank);
+    
+    
+    // all processes send their world_next to the root
+    // and the root collects them in the world_next array
+    if (rank == 0)
+        world_next = malloc(k*k*sizeof(char)); 
+    
+    // to use MPI_Gatherv I need to know the lenght of each process
+    // and the offset of each process in the world_next array
+    MPI_Gatherv(local_world_next, local_len, MPI_UNSIGNED_CHAR, world_next, lenghts, (int*)offset, MPI_UNSIGNED_CHAR, 0, MPI_COMM_WORLD);
 
-    // MPI_Scatterv(world, recvcounts, displs, MPI_UNSIGNED_CHAR, local_world, local_len, MPI_UNSIGNED_CHAR, 0, MPI_COMM_WORLD);
-    // MPI_Scatterv(world, &local_len, MPI_UNSIGNED_CHAR, local_world, MPI_UNSIGNED_CHAR, 0, MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
+    // check if it's time to save a snapshot of the playground
+    // and do it if it's needed
+    if (rank == 0)
+    {
+        if (s != 0 && day%s == 0)
+        {
+            char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
+            sprintf(snapname, "snaps/snapshot_%06d.pbm", day);
+            write_pbm((void*)world_next, smval, k, k, snapname);
+            free(snapname);
+        }
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    // swap the two arrays
+    unsigned char *tmp = world;
+    world = world_next;
+    world_next = tmp;
+    }
+    // write the final state of the playground to a file
+    if (rank == 0)
+    {
+        char *filename = malloc (21*sizeof(char));
+        sprintf(filename, "game_of_life_END.pbm");
+        write_pbm((void*)world, smval, k, k, filename);
+        free(filename);
+        free(world);
+    }
+}
+
+
+unsigned char should_live_parallel(unsigned const char* world, unsigned int k, unsigned int j, unsigned int *smaxVal, unsigned int* offset, int rank)
+{
+    // same logic as in serial version but I need to 
+    // "adjust" the index of the cells
+
+    unsigned int i = j + rank*offset[rank];  //adjustement of the index
+    
+
+    int result = 0;   // char is not enough to store the first sum
+    register unsigned const int row = i/k;
+    register unsigned const int col = i%k;
+    result  = world[(k+row-1)%k*k + (k+col-1)%k]  // top left
+            + world[(k+row+0)%k*k + (k+col-1)%k]  // top middle
+            + world[(k+row+1)%k*k + (k+col-1)%k]  // top right
+            + world[(k+row-1)%k*k + (k+col+0)%k]  // middle left
+            + world[(k+row+1)%k*k + (k+col+0)%k]  // middle right
+            + world[(k+row-1)%k*k + (k+col+1)%k]  // bottom left
+            + world[(k+row+0)%k*k + (k+col+1)%k]  // bottom middle
+            + world[(k+row+1)%k*k + (k+col+1)%k]; // bottom right
+    result /= (*smaxVal);
+    result = ((result == 2) || (result == 3)) ? *smaxVal : 0;
+    return (char)result;
 
 }
