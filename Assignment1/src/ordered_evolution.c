@@ -31,82 +31,53 @@ unsigned int *omaxVal = &omval;
 */
 void run_ordered(const char *fname, unsigned int k, unsigned const int n, unsigned const int s) 
 {
-    if(omp_get_num_threads() > 1)
+    /*
+        read the initial state of the playground from the file
+    */
+    unsigned char *world; 
+    #pragma omp parallel 
     {
-        /*
-            read the initial state of the playground from the file
-        */
-        unsigned char *world; 
-        #pragma omp parallel 
-        {
-            world = malloc(k*k*sizeof(char));
-            read_pbm((void**)&world, omaxVal, &k, &k, fname);
-        }
-        #pragma omp barrier   
-        #pragma omp for schedule(static) 
-        for(unsigned int day = 0; day < n; day++)
-        {
-            /*
-                compute the evolution of the playground and 
-                decide if a cell should alive or dead
-            */
-            #pragma omp parallel for schedule(static) firstprivate(k, omaxVal)
-            for (unsigned int i = 0; i < k*k; i++)
-                world[i] = should_live_serial(k, i, world, omaxVal);
-            /*
-                check if it's time to save a snapshot of the playground
-                and do it if it's needed
-            */
-            if (s==0)
-                continue;
-            if (day%s == 0)
-            {
-                
-                char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
-                sprintf(snapname, "snaps/snapshot_%06d.pbm", day); 
-                #pragma omp parallel
-                {
-                    write_pbm((void*)world, omval, k, k, snapname);
-                }
-                free(snapname);
-            }
-        } // for (int day)
-        char *filename = malloc (21*sizeof(char));
-        sprintf(filename, "game_of_life_END.pbm");
-        #pragma omp parallel
-        {
-            write_pbm((void*)world, omval, k, k, filename);
-        }
-        free(filename);
-        free(world);
-        return;
-    }  // if(omp_get_num_threads() > 1)
-    else 
-    {
-        unsigned char *world; 
         world = malloc(k*k*sizeof(char));
         read_pbm((void**)&world, omaxVal, &k, &k, fname);
-        for(unsigned int day = 0; day < n; day++)
+    }
+    #pragma omp barrier   
+    #pragma omp for schedule(static) 
+    for(unsigned int day = 0; day < n; day++)
+    {
+        /*
+            compute the evolution of the playground and 
+            decide if a cell should alive or dead
+        */
+        #pragma omp parallel for schedule(static) firstprivate(k, omaxVal)
+        for (unsigned int i = 0; i < k*k; i++)
+            world[i] = should_live_serial(k, i, world, omaxVal);
+        /*
+            check if it's time to save a snapshot of the playground
+            and do it if it's needed
+        */
+        if (s==0)
+            continue;
+        if (day%s == 0)
         {
-            for (unsigned int i = 0; i < k*k; i++)
-                world[i] = should_live_serial(k, i, world, omaxVal);
-            if (s==0)
-                continue;
-            if (day%s == 0)
+            
+            char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
+            sprintf(snapname, "snaps/snapshot_%06d.pbm", day); 
+            #pragma omp parallel
             {
-                char *snapname = malloc(24*sizeof(char)); 
-                sprintf(snapname, "snaps/snapshot_%06d.pbm", day); 
                 write_pbm((void*)world, omval, k, k, snapname);
-                free(snapname);
             }
-        } 
-        char *filename = malloc (21*sizeof(char));
-        sprintf(filename, "game_of_life_END.pbm");
+            free(snapname);
+        }
+    } // for (int day)
+    char *filename = malloc (21*sizeof(char));
+    sprintf(filename, "game_of_life_END.pbm");
+    #pragma omp parallel
+    {
         write_pbm((void*)world, omval, k, k, filename);
-        free(filename);
-        free(world);
-        return;
-    } // if(omp_get_num_threads() == 1)
+    }
+    free(filename);
+    free(world);
+    return;
 } // void run_ordered()
 
 

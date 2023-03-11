@@ -8,7 +8,7 @@
     void serial_static(const char *fname, unsigned int k, unsigned const int n, unsigned int s);
 #endif
 
-#ifndef SHOLUD_ALIVE_STATIC_H
-#define SHOLUD_ALIVE_STATIC_H
-    char should_live_static(unsigned int k, unsigned const int i, unsigned const char *world, unsigned const int *maxVal, int rank, int size);
+#ifndef PARALLEL_STATIC_H
+#define PARALLEL_STATIC_H
+    void parallel_static(const char *fname, unsigned int k, unsigned const int n, unsigned int s, int rank, int size);
 #endif
