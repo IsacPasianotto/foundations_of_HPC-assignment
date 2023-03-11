@@ -1,114 +1,120 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-
 #include<omp.h>
 #include<mpi.h>
 
-#include"initialize.h"
-#include"read_write_pgn.h"
-char* world; 
+#include "initialize.h"
+#include "read_write.h"
 
 /*
-    initialize_serial(): fill an array of char with random values
-        and call the write_pgm() function to write it into the 
-        desidered file. The probability than a cell starts as alive
-         (value = 255) is the 20%
-    @param:
-    fname:  name of the file where to write the results
-    k:     The size of the square-matrix the playground should be 
+    initialize():   checks if the executable is runned on
+        one or more processes, then consequently calls the 
+        correct function to initialize the playground.
+    @param
+    fname:  name of the file that's going to be written 
+            to initialize the playground
+    k:      size of the squre matrix that's going to rapresent
+            the playground
 */
-
-void initialize_serial(char* fname, int k)
+void initialize(const char *fname, unsigned const int k)
 {
-   world = (char*)malloc(k*sizeof(char));
-   #pragma omp parallel
-   {
-        int seed = time(NULL);
-        //int seed = 42;   // for debugging
-        srand(seed);
 
-        #pragma omp for
-            for (int i = 0; i < k*k; i++)
-                world[i] = (rand()%100<5) ? 255 : 0; 
-    }
-    write_pgm_image(world, 255, k, k, fname); 
-}
-
-/*
-    initialize_parallel(): fill an array of char with random values
-        and call the write_pgm() function to write it into the 
-        desidered file.  The probability than a cell starts as alive
-        (value = 255) is the 20%
-    
-    @param:
-    fname:  name of the file where to write the results
-    k:      the size of the square-matrix the playground should be 
-    rank:   the rank of the process that is executing the function
-    size:   the total number of mpi-processes involved 
-*/
-
-void initialize_parallel(char* fname, int k, int rank, int size)
-{
-    int seed = time(NULL);
-    //int seed = 42;   // for debugging
-    srand(seed);
-
-    int localRows_lenght; 
-    int std_size = k*k/size;
-    localRows_lenght = (rank!=0) ? std_size: std_size + k*k%size;
-    char* localWorld = (char*)malloc(std_size*std_size*sizeof(char));
-
-    #pragma omp parallel
+    int mpi_provided_thread_level;
+    MPI_Init_thread(NULL, NULL, MPI_THREAD_FUNNELED, &mpi_provided_thread_level);
+    if ( mpi_provided_thread_level < MPI_THREAD_FUNNELED ) 
     {
-        #pragma omp for schedule(static, 1)
-            for (int i = 0; i < localRows_lenght; i++)
-                localWorld[i] = (rand()%100<5) ? 255 : 0;
+        printf("Error: MPI thread support is lower than the demanded\n");
+        MPI_Finalize();
+        exit(1);
     }
-    char* world; 
-    if (rank == 0)
-        world = (char*)malloc(k*k*sizeof(char));
-    MPI_Barrier(MPI_COMM_WORLD);
-    // MPI_Gather(localWorld, localRows_lenght, MPI_CHAR, world, localRows_lenght, MPI_CHAR, 0, MPI_COMM_WORLD);
-
-    MPI_Gather(localWorld, localRows_lenght, MPI_CHAR, world, localRows_lenght, MPI_CHAR, 0, MPI_COMM_WORLD);
-    // char* world = (char*)malloc(k*k*sizeof(char));
-    // char* remaing = (char*)malloc(k*k%size*sizeof(char));
-    // the last process will have to take care of the remaining cells
-    
-    if (rank == 0)
-        write_pgm_image(world, 255, k, k, fname);
-}
-
-/*
-    initialize(): check if the executable is running on 
-        one or more mpi-tasks, and consequently invoke the 
-        right function initizlize_parallel() or initialize_serial()
-    
-    @param:
-    fname:  name of the file that's need to be initialized, which
-            will rappresent the playground
-    k:      The size of the square-matrix the playground should be 
-*/
-
-void initialize(char* fname, int k)
-{
     int rank, size;
-    MPI_Init(NULL, NULL);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    if (size > 1)
+    if (size == 1)
     {
-        initialize_parallel(fname, k, rank, size);
-        printf("finito di inizializzare il mondo\n");
         MPI_Finalize();
+        initialize_serial(fname, k);
         return; 
     }
     else
     {
+        initialize_parallel(fname, k, rank, size);
         MPI_Finalize();
-        initialize_serial(fname, k);
-        printf("finito di inizializzare il mondo\n");
         return;
     }
 }
+
+
+/*
+    initialize_serial():   initializes the playground
+        with a random configuration of cells and writes
+        the result to a file.
+        The probability of a cell to be alive is 15%.
+    @param
+    fname:  name of the file that's going to be written 
+            to initialize the playground
+    k:      size of the squre matrix that's going to rapresent
+            the playground
+*/
+void initialize_serial(const char *fname, unsigned const int k)
+{
+    char *world; 
+    #pragma omp parallel shared(world, k, fname)
+    {
+        world = (char *)malloc(k*k*sizeof(char));
+        int seed = time(NULL);
+        // int seed = 42;  // for testing purposes
+        srand(seed);
+        #pragma omp parallel for schedule(static) shared(world, k)
+            for (int i = 0; i < k*k; i++)
+                world[i] = rand() % 100 < 15 ? 255 : 0;
+        write_pbm(world, 255, k, k, fname);
+    }
+    free(world);
+    return; 
+}
+
+
+/*
+    initialize_parallel():   initializes the playground
+        with a random configuration of cells and writes
+        the result to a file. The procedure is done in 
+        parallel.
+        The probability of a cell to be alive is 15%.
+    @param
+    fname:  name of the file that's going to be written 
+            to initialize the playground
+    k:      size of the squre matrix that's going to rapresent
+            the playground
+    rank:   rank of the process
+    size:   number of processes
+*/
+void initialize_parallel(const char *fname, unsigned const int k, int rank, int size)
+{
+    int seed = time(NULL);
+    // int seed = 42;  // for testing purposes
+    srand(seed);
+    unsigned int std_chunk, chunk;
+    std_chunk = (k*k)/size;
+    chunk = (rank != 0) ? std_chunk : std_chunk + (k*k)%size;
+    char *world; 
+    char *local_world = (char *)malloc(chunk*sizeof(char));
+    #pragma omp parallel
+    {
+        #pragma omp parallel for schedule(static) shared(local_world, chunk)
+            for (int i = 0; i < chunk; i++)
+                local_world[i] = rand() % 100 < 15 ? 255 : 0;
+        if (rank == 0)
+            world = (char *)malloc(k*k*sizeof(char));
+    MPI_Barrier(MPI_COMM_WORLD);
+// needed because the read_pbn requires a pointer to an int
+    MPI_Gather(local_world, chunk, MPI_CHAR, world, chunk, MPI_CHAR, 0, MPI_COMM_WORLD);
+        if (rank == 0)
+            write_pbm(world, 255, k, k, fname);
+    } // #pragma omp parallel
+    free(local_world);
+    if (rank == 0)
+        free(world);
+    return;
+} // void initialze_parallel()

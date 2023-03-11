@@ -1,16 +1,14 @@
-# C compiler
 CC=mpicc
-
-
 INCDIR=include
+OBJDIR=obj
 SRCDIR=src
+SNAPDIR=snaps
 
 CFLAGS=-I$(INCDIR) -Wall -c -fopenmp
+OBJFLAGS=-Wall -fopenmp
 
-# Object files
-OBJDIR=obj
-OBJECTS=$(OBJDIR)/main.o $(OBJDIR)/initialize.o $(OBJDIR)/run.o $(OBJDIR)/read_write_pgn.o
-OBJFLAGS= -Wall -fopenmp
+OBJECTS=$(OBJDIR)/main.o $(OBJDIR)/initialize.o $(OBJDIR)/read_write.o $(OBJDIR)/run.o\
+        $(OBJDIR)/ordered_evolution.o $(OBJDIR)/static_evolution.o
 
 main.x: $(OBJECTS)
 	$(CC) $(OBJFLAGS) -o $@ $^
@@ -20,4 +18,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -o $@ $^
 clean:
 	rm -f $(OBJDIR)/*.o *.x
+image:
 	rm -f *.pbm
+	rm -f $(SNAPDIR)/*
+
