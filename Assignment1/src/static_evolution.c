@@ -117,7 +117,8 @@ void serial_static(const char *fname, unsigned int k, unsigned const int n, unsi
 /*
     parallel_static():   performs the static evolution of the playground
         and saves the result to a file.
-        This function is called only if the program is executed in parallel.
+        This function is called only if the program is executed on more
+        than one process.
     @param
     fname:  name of the file containing the initial state of the playground
     k:      size of the squre matrix that's going to rapresent
@@ -196,7 +197,7 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
 
     /*
         The master process saves the final state of the playground
-        to a file
+        into a file
     */
     if (rank == 0)
     {

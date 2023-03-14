@@ -15,10 +15,8 @@ unsigned int *omaxVal = &omval;
     run_ordered():  performs the ordered evolution of the playground
         and saves the result to a file.
         Ordered evolution means that the evolution of the playground
-        is computed in a sequential way, so that the evolution of
-        the playground is computed by one process at a time and the
-        next process can start to compute the evolution only when
-        the previous one has finished.
+        is computed evaluating the next state of a cell and updating 
+        it before moving to the next cell.
         note: the ordered evolution can be performed only in serial
         for the point of view of MPI.
     @param

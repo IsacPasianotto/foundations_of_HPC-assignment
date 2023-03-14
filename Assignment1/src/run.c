@@ -9,8 +9,8 @@
 #include"read_write.h" 
 
 /*
-    run(): check what kind of evolution is required and
-        consequently calls the correct function.
+    run(): check what kind of evolution is required (-e option)
+        and consequently calls the correct function.
     @param
     fname:  name of the file containing the initial state of the playground
     k:      size of the squre matrix that's going to rapresent

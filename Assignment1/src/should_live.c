@@ -1,5 +1,3 @@
-
-
 /*
     should_live():  check if a cell should live or die in the 
         next generation of the playground. 
@@ -13,8 +11,6 @@
     &maxVal: the cell should live
     0:       the cell should die
 */
-
-
 unsigned char should_live(unsigned const int k, unsigned const int i, unsigned const char *world, unsigned const int *maxVal)
 {
     int result = 0;   // char is not enough to store the first sum
