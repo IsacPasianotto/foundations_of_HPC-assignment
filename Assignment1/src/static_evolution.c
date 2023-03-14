@@ -86,7 +86,7 @@ void serial_static(const char *fname, unsigned int k, unsigned const int n, unsi
             continue;
         if (day%s == 0)
         {
-            char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
+            char *snapname = malloc(31*sizeof(char)); // 25 = length of "snaps/snapshot_%06d.pbm"
             sprintf(snapname, "snaps/snapshot_%06d.pbm", day);
             write_pbm((void*)yesterday, smval, k, k, snapname);
             free(snapname);
@@ -173,7 +173,7 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
         {
             if ((s!=0) && ( day%s == 0))
             {
-                char *snapname = malloc(25*sizeof(char));
+                char *snapname = malloc(31*sizeof(char));
                 sprintf(snapname, "snaps/snapshot_%06d.pbm", day);
                 write_pbm((void*)world, smval, k, k, snapname);
                 free(snapname);

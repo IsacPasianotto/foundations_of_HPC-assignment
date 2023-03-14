@@ -56,7 +56,7 @@ void run_ordered(const char *fname, unsigned int k, unsigned const int n, unsign
         if (day%s == 0)
         {
             
-            char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
+            char *snapname = malloc(31*sizeof(char)); // 31 = length of "snaps/snapshot_%06d.pbm"
             sprintf(snapname, "snaps/snapshot_%06d.pbm", day); 
             write_pbm((void*)world, omval, k, k, snapname);
             free(snapname);
