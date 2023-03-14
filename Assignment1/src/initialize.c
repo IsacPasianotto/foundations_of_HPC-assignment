@@ -100,19 +100,16 @@ void initialize_parallel(const char *fname, unsigned const int k, int rank, int 
     chunk = (rank != 0) ? std_chunk : std_chunk + (k*k)%size;
     char *world; 
     char *local_world = (char *)malloc(chunk*sizeof(char));
-    #pragma omp parallel
-    {
-        #pragma omp parallel for schedule(static) shared(local_world, chunk)
-            for (int i = 0; i < chunk; i++)
-                local_world[i] = rand() % 100 < 15 ? 255 : 0;
-        if (rank == 0)
-            world = (char *)malloc(k*k*sizeof(char));
+    #pragma omp parallel for schedule(static) shared(local_world, chunk)
+        for (int i = 0; i < chunk; i++)
+            local_world[i] = rand() % 100 < 15 ? 255 : 0;
+    if (rank == 0)
+        world = (char *)malloc(k*k*sizeof(char));
     MPI_Barrier(MPI_COMM_WORLD);
     // needed because the read_pbn requires a pointer to an int
     MPI_Gather(local_world, chunk, MPI_CHAR, world, chunk, MPI_CHAR, 0, MPI_COMM_WORLD);
-        if (rank == 0)
-            write_pbm(world, 255, k, k, fname);
-    } // #pragma omp parallel
+    if (rank == 0)
+        write_pbm(world, 255, k, k, fname);
     free(local_world);
     if (rank == 0)
         free(world);
