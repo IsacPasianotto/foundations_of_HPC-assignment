@@ -108,7 +108,7 @@ void initialize_parallel(const char *fname, unsigned const int k, int rank, int 
         if (rank == 0)
             world = (char *)malloc(k*k*sizeof(char));
     MPI_Barrier(MPI_COMM_WORLD);
-// needed because the read_pbn requires a pointer to an int
+    // needed because the read_pbn requires a pointer to an int
     MPI_Gather(local_world, chunk, MPI_CHAR, world, chunk, MPI_CHAR, 0, MPI_COMM_WORLD);
         if (rank == 0)
             write_pbm(world, 255, k, k, fname);

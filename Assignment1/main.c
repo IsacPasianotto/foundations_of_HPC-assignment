@@ -118,14 +118,14 @@ int main(int argc, char *argv[])
             double start = CPU_TIME;
             initialize(fname, k); 
             double end = CPU_TIME;
-            printf("Time for initialization: %f\n", end-start);
+            printf(",%f\n", end-start);
         }
         if (action == RUN)
         {
             double start = CPU_TIME;
             run(fname, k, n, s, e);
             double end = CPU_TIME;
-            printf("Time for evolution: %f\n", end-start);
+            printf(",%f\n", end-start);
         }
     }
     else
