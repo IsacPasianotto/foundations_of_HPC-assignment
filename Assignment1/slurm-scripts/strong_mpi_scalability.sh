@@ -21,20 +21,20 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=close
 export OMP_NUM_THREADS=1
 
-./main.x -i -k $k
 
 k=10000
+
+./main.x -i -k $k
 resultdir=time_measurements
 
 echo size,cores,time > $resultdir/MPI_S-scalability_size-$k.csv
-smpi$k.csv
 
 for i in {1..128}
 do
     for j in {1..5}
     do
         echo -n $k,$i, >> $resultdir/MPI_S-scalability_size-$k.csv
-        mpirun -np $i --map-by socket ./main.x -r -n 100 -e 1 >> $resultdir/MPI_S-scalability_size-$k.csv
+        mpirun -np $i --map-by socket ./main.x -r -n 100 -e 1 -t >> $resultdir/MPI_S-scalability_size-$k.csv
     done
 done
 
