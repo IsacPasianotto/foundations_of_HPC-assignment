@@ -61,23 +61,17 @@ void serial_static(const char *fname, unsigned int k, unsigned const int n, unsi
     */
     unsigned char *yesterday; 
     unsigned char *today;
-    #pragma omp parallel 
-    {
-        yesterday = malloc(k*k*sizeof(char));
-        read_pbm((void**)&yesterday, smaxVal, &k, &k, fname);
-    }
-    #pragma omp for
+    yesterday = malloc(k*k*sizeof(char));
+    read_pbm((void**)&yesterday, smaxVal, &k, &k, fname);
+    
     for (unsigned int day = 0; day < n; day++)
     {
-        #pragma omp parallel
-        {
-            today = malloc(k*k*sizeof(char));
-        }
+        today = malloc(k*k*sizeof(char));
         /*
             compute the evolution of the playground and 
             decide if a cell should alive or dead
         */
-        #pragma omp parallel for schedule(static) firstprivate(k, smaxVal)
+        #pragma omp for schedule(static)
         for (unsigned int i = 0; i < k*k; i++)
             today[i] = should_live(k, i, yesterday, smaxVal);
         unsigned char *tmp = yesterday;
@@ -94,20 +88,14 @@ void serial_static(const char *fname, unsigned int k, unsigned const int n, unsi
         {
             char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
             sprintf(snapname, "snaps/snapshot_%06d.pbm", day);
-            #pragma omp parallel
-            {
-                write_pbm((void*)yesterday, smval, k, k, snapname);
-            }
+            write_pbm((void*)yesterday, smval, k, k, snapname);
             free(snapname);
         }
         
     } // for (unsigned int day = 0; day < n; day+)
     char *filename = malloc (21*sizeof(char));
     sprintf(filename, "game_of_life_END.pbm");
-    #pragma omp parallel
-    {
-        write_pbm((void*)yesterday, smval, k, k, filename);
-    }
+    write_pbm((void*)yesterday, smval, k, k, filename);
     free(filename);
     free(yesterday);
     return;
@@ -135,11 +123,9 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
         of the playground from the file autonomously 
     */
     unsigned char *world;
-    #pragma omp parallel
-    {
-        world =malloc(k*k*sizeof(char));
-        read_pbm((void **)&world, smaxVal, &k, &k, fname); 
-    }
+    
+    world =malloc(k*k*sizeof(char));
+    read_pbm((void **)&world, smaxVal, &k, &k, fname); 
 
     /*
         Some needed variables to organize the parallel
@@ -173,7 +159,7 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
             local fragment of the playground. 
             Then every process sends its result to all the others
         */
-        #pragma omp parallel for schedule(static)
+        #pragma omp for schedule(static)
         for (unsigned int i = 0; i < lengths[rank]; i++)
             my_partial_result[i] = should_live(k, i+offset[rank], world, smaxVal);
 

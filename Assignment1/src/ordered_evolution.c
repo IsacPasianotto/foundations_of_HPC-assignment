@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include<omp.h>
 #include<mpi.h>
 
@@ -34,20 +35,16 @@ void run_ordered(const char *fname, unsigned int k, unsigned const int n, unsign
         read the initial state of the playground from the file
     */
     unsigned char *world; 
-    #pragma omp parallel 
-    {
-        world = malloc(k*k*sizeof(char));
-        read_pbm((void**)&world, omaxVal, &k, &k, fname);
-    }
-    #pragma omp barrier   
-    #pragma omp for schedule(static) 
+    
+    world = malloc(k*k*sizeof(char));
+    read_pbm((void**)&world, omaxVal, &k, &k, fname);
     for(unsigned int day = 0; day < n; day++)
     {
         /*
             compute the evolution of the playground and 
             decide if a cell should alive or dead
         */
-        #pragma omp parallel for schedule(static) firstprivate(k, omaxVal)
+        #pragma omp for schedule(static)
         for (unsigned int i = 0; i < k*k; i++)
             world[i] = should_live(k, i, world, omaxVal);
         /*
@@ -61,19 +58,13 @@ void run_ordered(const char *fname, unsigned int k, unsigned const int n, unsign
             
             char *snapname = malloc(24*sizeof(char)); // 24 = length of "snaps/snapshot_%06d.pbm"
             sprintf(snapname, "snaps/snapshot_%06d.pbm", day); 
-            #pragma omp parallel
-            {
-                write_pbm((void*)world, omval, k, k, snapname);
-            }
+            write_pbm((void*)world, omval, k, k, snapname);
             free(snapname);
         }
     } // for (int day)
     char *filename = malloc (21*sizeof(char));
     sprintf(filename, "game_of_life_END.pbm");
-    #pragma omp parallel
-    {
-        write_pbm((void*)world, omval, k, k, filename);
-    }
+    write_pbm((void*)world, omval, k, k, filename);
     free(filename);
     free(world);
     return;
