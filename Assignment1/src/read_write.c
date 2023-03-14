@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <stdio.h> 
 
+#include<mpi.h>
+
 #include "read_write.h"
 
 #define XWIDTH 256
@@ -122,4 +124,3 @@ void read_pbm(void **image, unsigned int *maxval, unsigned int *xsize, unsigned 
   fclose(image_file);
   return;
 } // void read_pbm()
-
