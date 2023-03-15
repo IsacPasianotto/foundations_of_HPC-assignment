@@ -58,7 +58,7 @@ void run_static(const char *fname, unsigned int k, unsigned const int n, unsigne
             parallel_static(fname, k, n, s, rank, size);
             double end = CPU_TIME;
             if (rank == 0)
-                printf(",%f", end-start);
+                printf(",%f\n", end-start);
             MPI_Finalize();
             return;
         }
@@ -76,7 +76,7 @@ void run_static(const char *fname, unsigned int k, unsigned const int n, unsigne
             MPI_Finalize();
             serial_static(fname, k, n, s);
             double end = CPU_TIME;
-            printf(",%f", end-start);
+            printf(",%f\n", end-start);
             return;
         }
     }
