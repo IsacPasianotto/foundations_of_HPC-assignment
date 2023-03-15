@@ -9,6 +9,3 @@ mpicc -Iinclude -Wall -c -fopenmp -o obj/should_live.o src/should_live.c
 mpicc -Iinclude -Wall -c -fopenmp -o obj/ordered_evolution.o src/ordered_evolution.c
 mpicc -Iinclude -Wall -c -fopenmp -o obj/static_evolution.o src/static_evolution.c
 mpicc -Wall -fopenmp -O3 -march=native -o main.x obj/main.o obj/initialize.o obj/read_write.o obj/run.o obj/should_live.o obj/ordered_evolution.o obj/static_evolution.o
-rm -f obj/*.o *.x
-rm -f *.pbm
-rm -f snaps/*
