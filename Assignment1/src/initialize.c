@@ -7,6 +7,19 @@
 #include "initialize.h"
 #include "read_write.h"
 
+// For measuring time
+
+#if defined(_OPENMP)
+    #define CPU_TIME ({struct  timespec ts; clock_gettime( CLOCK_REALTIME, &ts ),\
+	    (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;})
+    #define CPU_TIME_th ({struct  timespec myts; clock_gettime( CLOCK_THREAD_CPUTIME_ID, &myts ),\
+	    (double)myts.tv_sec + (double)myts.tv_nsec * 1e-9;})
+#else
+#define CPU_TIME ({struct  timespec ts; clock_gettime( CLOCK_PROCESS_CPUTIME_ID, &ts ),\
+    (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;})
+#endif
+
+
 /*
     initialize():   checks if the executable is runned on
         one or more processes, then consequently calls the 
@@ -16,8 +29,9 @@
             to initialize the playground
     k:      size of the squre matrix that's going to rapresent
             the playground
+    t:      should print the time taken by the function
 */
-void initialize(const char *fname, unsigned const int k)
+void initialize(const char *fname, unsigned const int k, const int t)
 {
 
     int mpi_provided_thread_level;
@@ -31,18 +45,41 @@ void initialize(const char *fname, unsigned const int k)
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
+    if (t==0)
+    {
+        if (size == 1)
+        {
+            MPI_Finalize();
+            initialize_serial(fname, k);
+            return; 
+        }
+        else
+        {
+            initialize_parallel(fname, k, rank, size);
+            MPI_Finalize();
+            return;
+        }
+    } 
+    else // t==1
     if (size == 1)
     {
         MPI_Finalize();
+        double start = CPU_TIME;
         initialize_serial(fname, k);
+        double end = CPU_TIME;
+        printf(",%f\n", end-start);
         return; 
     }
     else
     {
+        double start = CPU_TIME;
         initialize_parallel(fname, k, rank, size);
+        double end = CPU_TIME;
+        if (rank == 0)
+            printf(",%f\n", end-start);
         MPI_Finalize();
         return;
-    }
+    } 
 }
 
 

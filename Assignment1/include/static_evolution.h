@@ -1,6 +1,6 @@
 #ifndef STATIC_EVOLUTION_H
 #define STATIC_EVOLUTION_H
-    void run_static(const char *fname, unsigned int k, unsigned const int n, unsigned int s, int rank, int size);
+    void run_static(const char *fname, unsigned int k, unsigned const int n, unsigned int s, int rank, int size, const int t);
 #endif
 
 #ifndef SERIAL_STATIC_H

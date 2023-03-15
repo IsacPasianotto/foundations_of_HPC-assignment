@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<getopt.h> 
-#include<time.h>
 #include<omp.h>
 #include<mpi.h>
 
@@ -30,19 +29,6 @@ unsigned int n = N_DEFAULT;
 unsigned int s = S_DEFAULT;
 char *fname = NULL;
 int t = TIME_DEFAULT;
-
-
-// For measuring time
-
-#if defined(_OPENMP)
-    #define CPU_TIME ({struct  timespec ts; clock_gettime( CLOCK_REALTIME, &ts ),\
-	    (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;})
-    #define CPU_TIME_th ({struct  timespec myts; clock_gettime( CLOCK_THREAD_CPUTIME_ID, &myts ),\
-	    (double)myts.tv_sec + (double)myts.tv_nsec * 1e-9;})
-#else
-#define CPU_TIME ({struct  timespec ts; clock_gettime( CLOCK_PROCESS_CPUTIME_ID, &ts ),\
-    (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;})
-#endif
 
 /*
     The structure of the main method is based on the code given 
@@ -110,31 +96,11 @@ int main(int argc, char *argv[])
     }
 
     // do what the user asked for:
+    if (action == INITIALIZE)
+            initialize(fname, k, t);
+    if (action == RUN)
+            run(fname, k, n, s, e, t);
 
-    if (t == 1)
-    {
-         if (action == INITIALIZE)
-        {
-            double start = CPU_TIME;
-            initialize(fname, k); 
-            double end = CPU_TIME;
-            printf(",%f\n", end-start);
-        }
-        if (action == RUN)
-        {
-            double start = CPU_TIME;
-            run(fname, k, n, s, e);
-            double end = CPU_TIME;
-            printf(",%f\n", end-start);
-        }
-    }
-    else
-    {
-        if (action == INITIALIZE)
-            initialize(fname, k);
-        if (action == RUN)
-            run(fname, k, n, s, e);
-    }
     free(fname);
     return 0;
 

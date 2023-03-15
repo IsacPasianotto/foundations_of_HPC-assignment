@@ -1,11 +1,26 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<omp.h>
+#include<time.h>
 #include<mpi.h>
 
 #include"static_evolution.h"
 #include"should_live.h"
 #include"read_write.h"
+
+// For measuring time
+
+#if defined(_OPENMP)
+    #define CPU_TIME ({struct  timespec ts; clock_gettime( CLOCK_REALTIME, &ts ),\
+	    (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;})
+    #define CPU_TIME_th ({struct  timespec myts; clock_gettime( CLOCK_THREAD_CPUTIME_ID, &myts ),\
+	    (double)myts.tv_sec + (double)myts.tv_nsec * 1e-9;})
+#else
+#define CPU_TIME ({struct  timespec ts; clock_gettime( CLOCK_PROCESS_CPUTIME_ID, &ts ),\
+    (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;})
+#endif
+
+
 
 // needed because the read_pbn requires a pointer to an int
 unsigned int smval;                   
@@ -25,19 +40,45 @@ unsigned int *smaxVal = &smval;
     n:      number of generations must be computed
     s:      every how many generations save a snapshot
     rank:   rank of the process
+    size:   number of processes
+    t:      should print the time of the computation
 */
-void run_static(const char *fname, unsigned int k, unsigned const int n, unsigned int s, int rank, int size)
+void run_static(const char *fname, unsigned int k, unsigned const int n, unsigned int s, int rank, int size, const int t)
 {
     if (size > 1) 
+    {   
+        if (t == 0)
+        {
+            parallel_static(fname, k, n, s, rank, size);
+            MPI_Finalize();
+            return;
+        } else // t == 1
+        {
+            double start = CPU_TIME;
+            parallel_static(fname, k, n, s, rank, size);
+            double end = CPU_TIME;
+            if (rank == 0)
+                printf(",%f", end-start);
+            MPI_Finalize();
+            return;
+        }
+    } else // size == 1
     {
-        parallel_static(fname, k, n, s, rank, size);
-        MPI_Finalize();
-        return;
-    } else
-    {
-        MPI_Finalize();
-        serial_static(fname, k, n, s);
-        return;
+        if (t ==0)
+        {
+            MPI_Finalize();
+            serial_static(fname, k, n, s);
+            return;
+        }
+        else // t == 1
+        {
+            double start = CPU_TIME;
+            MPI_Finalize();
+            serial_static(fname, k, n, s);
+            double end = CPU_TIME;
+            printf(",%f", end-start);
+            return;
+        }
     }
 }
 
