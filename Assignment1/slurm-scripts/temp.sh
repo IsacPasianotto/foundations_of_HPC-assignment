@@ -23,20 +23,20 @@ export OMP_PROC_BIND=close
 
 
 k=17500
-evolution=1
+evolution=0
 
 mpirun -np 2 ./main.x -i -k $k
 resultdir=time_measurements
 
-echo size,OMP-threads,time > $resultdir/OMP-scalability_static-ev_size_TWO-SOCKET-$k.csv
+echo size,OMP-threads,time > $resultdir/OMP-scalability_ordered-ev_size_TWO-SOCKET-$k.csv
 
 for i in {1..12}
 do
 	export OMP_NUM_THREADS=$i
 	for j in {1..5}
 	do
-		echo -n $k,$i >> $resultdir/OMP-scalability_static-ev_size_TWO-SOCKET-$k.csv
-	        mpirun -np 2 --map-by node --bind-to socket ./main.x -r -n 10 -e $evolution -t >> $resultdir/OMP-scalability_static-ev_size_TWO-SOCKET-$k.csv
+		echo -n $k,$i >> $resultdir/OMP-scalability_ordered-ev_size_TWO-SOCKET-$k.csv
+	        mpirun -np 2 --map-by node --bind-to socket ./main.x -r -n 10 -e $evolution -t >> $resultdir/OMP-scalability_ordered-ev_size_TWO-SOCKET-$k.csv
 	done
 done
 
