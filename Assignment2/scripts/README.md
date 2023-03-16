@@ -1,5 +1,3 @@
-# logbook
-
 The scripts in this folder are aimed to: 
 
 - perform the `mygemm.c` code using: 
