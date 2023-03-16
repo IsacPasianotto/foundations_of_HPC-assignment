@@ -44,7 +44,7 @@ void run_ordered(const char *fname, unsigned int k, unsigned const int n, unsign
             compute the evolution of the playground and 
             decide if a cell should alive or dead
         */
-        #pragma omp for schedule(static)
+        #pragma omp parallel for schedule(static)
         for (unsigned int i = 0; i < k*k; i++)
             world[i] = should_live(k, i, world, omaxVal);
         /*

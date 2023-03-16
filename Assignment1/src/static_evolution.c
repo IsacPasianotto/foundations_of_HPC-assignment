@@ -112,7 +112,7 @@ void serial_static(const char *fname, unsigned int k, unsigned const int n, unsi
             compute the evolution of the playground and 
             decide if a cell should alive or dead
         */
-        #pragma omp for schedule(static)
+        #pragma omp parallel for schedule(static)
         for (unsigned int i = 0; i < k*k; i++)
             today[i] = should_live(k, i, yesterday, smaxVal);
         unsigned char *tmp = yesterday;
@@ -200,7 +200,7 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
             local fragment of the playground. 
             Then every process sends its result to all the others
         */
-        #pragma omp for schedule(static)
+        #pragma omp parallel for schedule(static)
         for (unsigned int i = 0; i < lengths[rank]; i++)
             my_partial_result[i] = should_live(k, i+offset[rank], world, smaxVal);
 
