@@ -22,20 +22,21 @@ export OMP_PROC_BIND=close
 export OMP_NUM_THREADS=1
 
 
-k=1000
+k=10000
 evolution=0
 
 ./main.x -i -k $k
 resultdir=time_measurements
 
-echo size,cores,time >> $resultdir/MPI_S-scalability_ordered-ev_size-$k.csv
+echo size,cores,time > $resultdir/MPI_S-scalability_ordered-ev_size-$k.csv
 
-for i in {1..48}
+
+for i in {1..24}
 do
     for j in {1..5}
     do
         echo -n $k,$i >> $resultdir/MPI_S-scalability_ordered-ev_size-$k.csv
-        mpirun -np $i --map-by core ./main.x -r -n 10 -e $evolution -t >> $resultdir/MPI_S-scalability_ordered-ev_size-$k.csv
+	mpirun -np $i --map-by core ./main.x -r -n 10 -e $evolution -t >> $resultdir/MPI_S-scalability_ordered-ev_size-$k.csv
     done
 done
 
