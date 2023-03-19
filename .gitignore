@@ -7,6 +7,9 @@ report/*
 # executable files:
 *.x
 
+# slurm outputs
+*.out
+
 # File used to obtains plot
 .Rproj.user
 *.Rproj
