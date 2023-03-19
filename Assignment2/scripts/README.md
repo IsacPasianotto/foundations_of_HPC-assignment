@@ -14,9 +14,9 @@ The scripts in this folder are aimed to:
     - `OMP_PROC_BIND=close`
     - I omitted the `OMP_PROC_BIND=master` due to time constraints of the assignment. 
 
-For both: `DOUBLE` and `FLOAT` precision, and for both **EPYC** and **THIN** nodes.
+For both: `DOUBLE` and `FLOAT` precision, and for both **Epyc** and **Thin** nodes.
 
 ## Results
 
-All the results are stored in [the folder](https://github.com/IsacPasianotto/foundations_of_HPC-assignment/tree/main/Assignment2/results) `results`.\
-In that folder there is a `README.md` file that explains the codification adopted for the names of the files.
+All the results are stored in the folder [`results`](../results).\
+In that folder you can find a `README.md` file that explains the codification adopted for the names of the files.

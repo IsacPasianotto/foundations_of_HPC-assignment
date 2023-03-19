@@ -2,25 +2,26 @@
 
 ### Description
 
-In this folder there are all the file needed to do the exercise second exercise of the assignment(check the scalability of the [given code](dgemm.c) using `OpenBlas`, `MKL` and `Blis` libraries).
+In this folder there are all the file needed to do the second exercise of the assignment: check how the 3 math libraries `openBLAS`, `MKL` and `BLIS` perform on a level 3 BLAS routine in the given code [`dgemm.c`](dgemm.c).
+
 
 ## - File in this directory
 
 - `README.md`: this file
-- `Makefile`s: makefile to compile the code. Since The compilation was done multiple times (for different precision and different libraries), exixsts multiple make file (whose name shoulf be self explanatory): 
-    - `Makefile_DOUBLE`: for `DOUBLE` precision, on **EPYC** nodes
-    - `Makefile_FLOAT`: for `FLOAT` precision, on **EPYC** nodes
-    - `Makefile_DOUBLE_intel`: for `DOUBLE` precision, on **THIN** nodes
-    - `Makefile_FLOAT_intel`: for `FLOAT` precision, on **THIN** nodes
+- `Makefile`s: Makefile to compile the code. Since the compilation was done multiple times (for different precision of floating point operations and on different architectures), exists multiple make file (whose name should be self-explanatory): 
+    - `Makefile_DOUBLE`: for `DOUBLE` precision, on **Epyc** nodes
+    - `Makefile_FLOAT`: for `FLOAT` precision, on **Epyc** nodes
+    - `Makefile_DOUBLE_intel`: for `DOUBLE` precision, on **Thin** nodes
+    - `Makefile_FLOAT_intel`: for `FLOAT` precision, on **Thin** nodes
 
-- `dgemm.c`: the code [given by the professor](dgemm.c) in the assignment. 
-- `mygemm.c`: the [code that I used](mygemm.c) to do the exercise. It is a copy of the code given by the professor, with some modifications in the printing format of the results (to make it easier work with the results).
+- [`dgemm.c`](dgemm.c): the code given by the professor in the assignment. 
+- [`mygemm.c`](mygemm.c): the code that I used to do the exercise. It is a copy of the code given by the professor, with some modifications in the printing format of the results (to make it easier work with the results).
 
-## - `Scripts` [directory](scripts)
+## - [`Scripts` directory](scripts)
 
 - `README.md`: A summary of the scripts I used to perform the code
-- `<--->.sh`: scripts to perform the code. The name of the scripts inside should be self explanatory. In particular there are scripts to:
-    - compile the code (with the different makefiles)
+- `###.sh`: scripts to perform the code. The name of the scripts inside should be self-explanatory. In particular there are scripts to:
+    - compile the code (with the different Makefile-s)
     - run the code
     
 All that `.sh` file are scripts executed by the `sbatch` command.
