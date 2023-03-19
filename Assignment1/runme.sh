@@ -44,4 +44,4 @@ f=fileToLoad.pbm  # use -f $f to load a initial state from a file or write in th
 # TODO: set the --map-by and --bind-to options
 #       according to your needs
 
-mpirun -np 1 --map-by node --bind-to socket ./main.x -r -n 10 -e $e >> $resultdir/OMP-scalability_ordered-ev_size-$k.csv
+mpirun -np 1 --map-by node --bind-to socket ./main.x -$a -n $n -s $s -e $e -f $f -k $k 
