@@ -35,7 +35,6 @@ export OMP_PLACES=cores
 export OMP_PROC_BIND=close
 export OMP_NUM_THREADS=8
 
-a=r         # action: i=init, r=run
 k=25000     # size of the grid (to be used with -i)
 e=1         # evolution: 0=ordered, 1=static (to be used with -r)
 s=1         # every how many steps save a snapshot (to be used with -r)
@@ -45,4 +44,5 @@ f=fileToLoad.pbm  # use -f $f to load a initial state from a file or write in th
 # TODO: set the --map-by and --bind-to options
 #       according to your needs
 
-mpirun -np $np --map-by node --bind-to socket ./main.x -$a -n $n -s $s -e $e -f $f -k $k 
+mpirun -np $np ./main.x -i -k $k
+mpirun -np $np ./main.x -r -n $n -s $s -e $e  
