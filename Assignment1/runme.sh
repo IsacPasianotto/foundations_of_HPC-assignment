@@ -7,6 +7,7 @@
 #SBATCH --exclusive
 #SBATCH --time=02:00:00
 
+np=12      #number of MPI-processes
 
 # To know each slurm.out file belongs to which job
 date
@@ -24,7 +25,7 @@ module load openMPI/4.1.4/gnu/12.2.1
 
 # Remove old files if any exist and then compile
 make clean
-make image
+# make image
 make
 
 # TODO: set environment variables
@@ -44,4 +45,4 @@ f=fileToLoad.pbm  # use -f $f to load a initial state from a file or write in th
 # TODO: set the --map-by and --bind-to options
 #       according to your needs
 
-mpirun -np 1 --map-by node --bind-to socket ./main.x -$a -n $n -s $s -e $e -f $f -k $k 
+mpirun -np $np --map-by node --bind-to socket ./main.x -$a -n $n -s $s -e $e -f $f -k $k 
