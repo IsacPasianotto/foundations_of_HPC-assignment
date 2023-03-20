@@ -7,14 +7,14 @@ All the results are named as:
 
 Where: 
 
-- `lib`: stands for libraryes, it could be:
+- `lib`: stands for libraries, it could be:
     - `oblas` for OpenBLAS
     - `mkl` 
     - `blis`
 - `precision` indicates the precision for the floating point operations:
     - `double`
     - `float`
-- `architecture` indicates the CPU type of the node where the benchmarks are runned: 
+- `architecture` indicates the CPU type of the node where the benchmarks are ran: 
     - `epyc` if it's performed in the Epyc nodes (AMD CPUs)
     - `intel` if it's performed in the Thin node (Intel CPUs)
 - `fixed`: how we measure the scalability of the `gemm.c` code. It can be: 
@@ -22,7 +22,7 @@ Where:
     - `size`: it means that the size of the three matrices is fixed at 12,000. The scalability is measured increasing the number of cores used to run the code (from 1 to 64/12 in Epyc/Thin nodes)
 - `proc_bind`: The binding policy used:
     - `close` if the code is executed after `export OMP_PROC_BIND=close`
-    - `spread` if th ecode is executed after `export OMP_PROC_BIND=spread`
+    - `spread` if the code is executed after `export OMP_PROC_BIND=spread`
  
 
 ## Possible combinations
