@@ -113,7 +113,7 @@ void serial_static(const char *fname, unsigned int k, unsigned const int n, unsi
             decide if a cell should alive or dead
         */
         #pragma omp parallel for schedule(static)
-        for (unsigned int i = 0; i < k*k; i++)
+        for (unsigned long i = 0; i < k*k; i++)
             today[i] = should_live(k, i, yesterday, smaxVal);
         unsigned char *tmp = yesterday;
         yesterday = today;
@@ -174,13 +174,13 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
         local_len:  number of cells that each process is going to compute
         offset:     offset of the local playground w.r.t. the global one
     */
-    unsigned int local_len = k*k/size;
+    unsigned long local_len = k*k/size;
     if (local_len*size < k*k && rank < k*k-local_len*size) 
         local_len++;                                        
     
-    unsigned int *offset = malloc(size*sizeof(int));
-    int *lengths = malloc(size*sizeof(int));
-    for (int i = 0; i < size; i++)
+    unsigned long *offset = malloc(size*sizeof(long));
+    int *lengths = malloc(size*sizeof(long));
+    for (unsigned long i = 0; i < size; i++)
     {                               
         lengths[i] = k*k/size;
         if (lengths[i]*size < k*k && i < k*k-lengths[i]*size)
@@ -201,7 +201,7 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
             Then every process sends its result to all the others
         */
         #pragma omp parallel for schedule(static)
-        for (unsigned int i = 0; i < lengths[rank]; i++)
+        for (unsigned long i = 0; i < lengths[rank]; i++)
             my_partial_result[i] = should_live(k, i+offset[rank], world, smaxVal);
 
         MPI_Allgatherv((void *)my_partial_result, lengths[rank], MPI_UNSIGNED_CHAR, (void *)world, lengths, (int*)offset, MPI_UNSIGNED_CHAR, MPI_COMM_WORLD);

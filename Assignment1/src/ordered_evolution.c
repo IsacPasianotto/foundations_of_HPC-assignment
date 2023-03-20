@@ -45,7 +45,7 @@ void run_ordered(const char *fname, unsigned int k, unsigned const int n, unsign
             decide if a cell should alive or dead
         */
         #pragma omp parallel for schedule(static)
-        for (unsigned int i = 0; i < k*k; i++)
+        for (unsigned long i = 0; i < k*k; i++)
             world[i] = should_live(k, i, world, omaxVal);
         /*
             check if it's time to save a snapshot of the playground

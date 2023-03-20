@@ -104,7 +104,7 @@ void initialize_serial(const char *fname, unsigned const int k)
         // int seed = 42;  // for testing purposes
         srand(seed);
         #pragma omp parallel for schedule(static) shared(world, k)
-            for (int i = 0; i < k*k; i++)
+            for (unsigned long i = 0; i < k*k; i++)
                 world[i] = rand() % 100 < 15 ? 255 : 0;
         write_pbm(world, 255, k, k, fname);
     }
@@ -138,7 +138,7 @@ void initialize_parallel(const char *fname, unsigned const int k, int rank, int 
     char *world; 
     char *local_world = (char *)malloc(chunk*sizeof(char));
     #pragma omp parallel for schedule(static) shared(local_world, chunk)
-        for (int i = 0; i < chunk; i++)
+        for (unsigned long i = 0; i < chunk; i++)
             local_world[i] = rand() % 100 < 15 ? 255 : 0;
     if (rank == 0)
         world = (char *)malloc(k*k*sizeof(char));
