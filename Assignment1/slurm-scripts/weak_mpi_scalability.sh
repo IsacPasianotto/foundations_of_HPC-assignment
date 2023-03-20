@@ -28,16 +28,16 @@ evolution=1
 
 resultdir=time_measurements
 
-sizes=(10000 10000 14142 17321 20000 22361)
+sizes=(10000 10000 14142 17321 20000 22361 24496 26458 28284 30000)
 
 echo size,cores,time > $resultdir/MPI_W-scalability_static-ev_16omp-threds.csv
 
-for i in {1..5}
+for i in {1..9}
 do
+    mpirun -np 1 ./main.x -i ${sizes[i]}
     for j in {1..5}
     do
         echo -n ${sizes[i]},$i >> $resultdir/MPI_W-scalability_static-ev_16omp-threds.csv
-	mpirun -np $i ./main.x -i ${sizes[i]}
         mpirun -np $i --map-by core ./main.x -r -n 10 -e $evolution -t >> $resultdir/MPI_W-scalability_static-ev_16omp-threds.csv
     done
 done

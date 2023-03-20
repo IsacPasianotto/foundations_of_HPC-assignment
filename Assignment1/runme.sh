@@ -35,10 +35,10 @@ export OMP_PLACES=cores
 export OMP_PROC_BIND=close
 export OMP_NUM_THREADS=8
 
-k=25000     # size of the grid (to be used with -i)
+k=10000     # size of the grid (to be used with -i)
 e=1         # evolution: 0=ordered, 1=static (to be used with -r)
 s=1         # every how many steps save a snapshot (to be used with -r)
-n=500       # number of steps to evolve (to be used with -r)
+n=15       # number of steps to evolve (to be used with -r)
 f=fileToLoad.pbm  # use -f $f to load a initial state from a file or write in the case of -i
 
 # TODO: set the --map-by and --bind-to options
