@@ -29,4 +29,4 @@ All that `.sh` file are scripts executed by the `sbatch` command.
 ## - `Results` [directory](results)
 
 - `README.md`: A summary of the results of the code and the codification adopted for the names of the files
-- `<--->.csv`: all the file that stores the results I got
+- `###.csv`: all the file that stores the results I got
