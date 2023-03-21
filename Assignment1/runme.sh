@@ -40,6 +40,7 @@ e=1         # evolution: 0=ordered, 1=static (to be used with -r)
 s=1         # every how many steps save a snapshot (to be used with -r)
 n=15       # number of steps to evolve (to be used with -r)
 f=fileToLoad.pbm  # use -f $f to load a initial state from a file or write in the case of -i
+                  # note that the length of the file name should not exceed 25 characters
 
 # TODO: set the --map-by and --bind-to options
 #       according to your needs

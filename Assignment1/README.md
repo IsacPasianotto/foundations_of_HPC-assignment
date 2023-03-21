@@ -35,7 +35,7 @@ The `Makefile` can also accept the following options (in this case no module loa
 To run the code, you can do both of the following:
 
 -  Ask to *slurm* scheduler the desired resources and run the executable with the `salloc` and `srun` commands. 
-- (Suggested) modify according to your needs the **slurm script** `runme.sh` and run it with the `sbatch` command: 
+- (Suggested) modify according to your needs the **slurm script** [`runme.sh`](./runme.sh) and run it with the `sbatch` command: 
 
 ```bash
 sbatch runme.sh
@@ -49,6 +49,7 @@ Essentially, the `runme.sh` script will run the executable `main.x` with the arg
 - `-n <int>`: The number of generations the game will run for (if the `-r` option is used).
 - `-s <int>`: Every `<int>` generations, the program will store a snapshot of the playground in the `snaps/` directory. If it is not used, or set to 0, no snapshots will be stored.
 - `-e <0/1>`: Evolution method to use. If set to 0, the program will use the ordered evolution method, otherwise it will use the static evolution method.
+- `-f <*char>`: The name of the `.pbm` the program will read from (if the `-r` option is used) or write to (if the `-i` option is used).
 - `-t`: If used, the program will print the time (in seconds) it took to run. 
 
 
