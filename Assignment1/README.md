@@ -45,7 +45,7 @@ Essentially, the `runme.sh` script will run the executable `main.x` with the arg
 
 - `-i`: if it must randomly generate an initial configuration of the game.
 - `-r`: if it must read the initial configuration from a `.pbm` file and perform the actual game.
-- `-k <int>`: The size of the square matrix (number of rows/columns) the playground will have (if the `-i` option is used).
+- `-k <int ∈ {1, ..., 65,535}>`: The size of the square matrix (number of rows/columns) the playground will have (if the `-i` option is used).
 - `-n <int>`: The number of generations the game will run for (if the `-r` option is used).
 - `-s <int>`: Every `<int>` generations, the program will store a snapshot of the playground in the `snaps/` directory. If it is not used, or set to 0, no snapshots will be stored.
 - `-e <0/1>`: Evolution method to use. If set to 0, the program will use the ordered evolution method, otherwise it will use the static evolution method.
