@@ -165,7 +165,7 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
     */
     unsigned char *world;
     
-    world =malloc(k*k*sizeof(char));
+    world =malloc(k*k*sizeof(unsigned char));
     read_pbm((void **)&world, smaxVal, &k, &k, fname); 
 
     /*
@@ -178,17 +178,17 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
     if (local_len*size < k*k && rank < k*k-local_len*size) 
         local_len++;                                        
     
-    unsigned long *offset = malloc(size*sizeof(long));
-    int *lengths = malloc(size*sizeof(long));
+    unsigned int *offset = malloc(size*sizeof(unsigned long));
+    unsigned int *lengths = malloc(size*sizeof(unsigned int));
     for (unsigned long i = 0; i < size; i++)
     {                               
         lengths[i] = k*k/size;
         if (lengths[i]*size < k*k && i < k*k-lengths[i]*size)
             lengths[i]++;
-        offset[i] = i*(lengths[i])+1*i;
+        offset[i] = i == 0 ? 0 : offset[i-1]+lengths[i-1]; 
     }
 
-    unsigned char *my_partial_result = malloc(lengths[rank]*sizeof(char));
+    unsigned char *my_partial_result = malloc(lengths[rank]*sizeof(unsigned char));
 
 
     for (unsigned int day = 0; day < n; day++)
@@ -204,8 +204,9 @@ void parallel_static(const char *fname, unsigned int k, unsigned const int n, un
         for (unsigned long i = 0; i < lengths[rank]; i++)
             my_partial_result[i] = should_live(k, i+offset[rank], world, smaxVal);
 
-        MPI_Allgatherv((void *)my_partial_result, lengths[rank], MPI_UNSIGNED_CHAR, (void *)world, lengths, (int*)offset, MPI_UNSIGNED_CHAR, MPI_COMM_WORLD);
-        
+       MPI_Allgatherv((void *)my_partial_result, lengths[rank], MPI_UNSIGNED_CHAR, (void *)world, (int *)lengths, (int *)offset, MPI_UNSIGNED_CHAR, MPI_COMM_WORLD);
+
+       
         /*
             check if it's time to save a snapshot of the playground
             and do it if it's needed
